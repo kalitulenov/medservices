@@ -14,11 +14,12 @@ export const EditCell = ({ row, table }) => {
 
       // записать изменения в БД
       if (elName === "done") {meta?.updateRow(row.index)}
-
-      // удаление записи из БД
-      if (elName === "remove") {meta?.removeRow(row.index)}
-
     }
+
+    // удаление записи из БД
+    const removeRow = () => {
+      meta?.removeRow(row.index);
+    };
 
     return (
         <div className="edit-cell-container">
@@ -37,7 +38,7 @@ export const EditCell = ({ row, table }) => {
                   <button onClick={setEditedRows} name="edit">
                     ✐
                   </button>
-                  <button onClick={setEditedRows} name="remove">
+                  <button onClick={removeRow} name="remove">
                     X
                   </button>
               </div>

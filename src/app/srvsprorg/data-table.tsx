@@ -36,6 +36,7 @@ import { deleteRow, updateRow, addRow } from "./actionsOrg";
 import { SprOrg } from "./types";
 
 
+
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprOrg, TValue>[];
     data: SprOrg[];
@@ -60,12 +61,16 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = React.useState({});
 
-  const [isValidating, setIsValidating] = React.useState(false);
+  const [isValidating, setIsValidating] = React.useState(true);
 
-
+  const [pagination, setPagination] = useState({
+    pageIndex: 0, //initial page index
+    pageSize: 5, //default page size
+    });
+  
   useEffect(() => {
     console.log("useEffect=",isValidating);
-    //if (isValidating) return; 
+ //   if (isValidating) return; 
     setDataSpr([...originalData]); }, [isValidating]);
 
 
@@ -80,6 +85,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     getPaginationRowModel: getPaginationRowModel(),   // для листания
     getSortedRowModel: getSortedRowModel(),           // для сортировки
     getFilteredRowModel: getFilteredRowModel(),       // для фильтраций
+    onPaginationChange: setPagination, //update the pagination state when internal APIs mutate the pagination state
 
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -91,6 +97,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
     meta: {
         editedRows,
@@ -132,6 +139,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
           console.log("data-table-updateRow=",rowIndex);
 
           updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
+          setIsValidating(!isValidating);
         },
 
         updateData: (rowIndex: number, columnId: string, value: string) => {
@@ -148,6 +156,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
 
         removeRow: (rowIndex: number) => {
           deleteRow(dataSpr[rowIndex].Id);
+          setIsValidating(!isValidating);
         },
   
         addRow: () => {

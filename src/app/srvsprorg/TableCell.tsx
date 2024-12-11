@@ -13,12 +13,13 @@ type Option = {
     const tableMeta = table.options.meta
     const [value, setValue] = useState(initialValue)
 
+    // console.log("TableCell-tableMeta=",tableMeta);
     // console.log("TableCell-columnMeta=",columnMeta);
-
+ 
     useEffect(() => {setValue(initialValue)}, [initialValue])
 
     const onBlur = () => {
-      console.log("TableCell-rowIndex=",row.index, column.id, value);
+      // console.log("TableCell-rowIndex=",row.index, column.id, value);
       tableMeta?.updateData(row.index, column.id, value)}
     //  удалил ветку для (columnMeta?.type===select)
     // const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -27,15 +28,14 @@ type Option = {
     // }
 
     if (tableMeta?.editedRows[row.id]) {
-      return columnMeta?.type !== "remove" ? 
-      (
+      return (
         <input
           value={value}
           onChange={e => setValue(e.target.value)}
           onBlur={onBlur}
           type={columnMeta?.type || "text"}
-        />
-      ) : (null)
+        />)
+      
     }
     return <span>{value}</span>
   }
