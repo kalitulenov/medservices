@@ -7,7 +7,7 @@ export const EditCell = ({ row, table }) => {
       const elName = e.currentTarget.name
       meta?.setEditedRows((old: []) => ({...old,[row.id]: !old[row.id],}))
 
-      console.log("EditCell-elName=",elName);
+      //console.log("EditCell-elName=",elName);
 
       // отмена изменения
       if (elName === "cancel") {meta?.revertData(row.index)}
@@ -25,7 +25,7 @@ export const EditCell = ({ row, table }) => {
         <div className="edit-cell-container">
         {/* // <div className="flex rounded-3xl w-8 h-8 gap-4 border-4 items-center">  */}
             {meta?.editedRows[row.id] ? (
-              <div className="edit-cell">
+              <div className="edit-cell-action">
                   <button onClick={setEditedRows} name="cancel">
                     ⚊
                   </button>{" "}
@@ -34,7 +34,7 @@ export const EditCell = ({ row, table }) => {
                   </button>
               </div>
             ) : (
-              <div className="edit-cell">
+              <div className="edit-cell-action">
                   <button onClick={setEditedRows} name="edit">
                     ✐
                   </button>

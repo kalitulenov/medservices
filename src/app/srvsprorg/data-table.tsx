@@ -31,17 +31,14 @@ import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 //import { columns } from "./columns";
 import { FooterCell } from "./FooterCell";
-import "./table.css";
+//import "./table.css";
 import { deleteRow, updateRow, addRow } from "./actionsOrg";
 import { SprOrg } from "./types";
-
-
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprOrg, TValue>[];
     data: SprOrg[];
   }
-  
 
 export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
  
@@ -56,7 +53,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   // для отмеченных строк
   const [rowSelection,setrowSelection] = useState({})
 
-  const [datainp, setDatainp] = useState(() => [...data]); // для обновления
+  //const [datainp, setDatainp] = useState(() => [...data]); // для обновления
   // ------------------------------------------------------
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = React.useState({});
@@ -69,10 +66,11 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     });
   
   useEffect(() => {
-    console.log("useEffect=",isValidating);
- //   if (isValidating) return; 
-    setDataSpr([...originalData]); }, [isValidating]);
-
+      console.log("useEffect=",isValidating);
+  //   if (isValidating) return; 
+      setDataSpr([...originalData]);
+      data = [...originalData]
+  }, [isValidating]);
 
   console.log("data-table-data=",data);
   console.log("data-table-dataSpr=",dataSpr);

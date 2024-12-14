@@ -30,16 +30,16 @@ model sprmnubar {
   number    String
 }
 
- model sprorg {
+ model sprusr {
         Id Int    @id @default(autoincrement())
-        OrgKod    Int
-        OrgCty    Int
-        OrgNam    String
-        OrgNamShr String
-        OrgAdr    String
-        OrgTel    String
-        OrgDmu    String
-    }
+        UsrKod    Int
+        UsrOrg    Int
+        UsrLog    String
+        UsrPsw    String
+        UsrTyp    String
+        UsrFio    String
+        UsrTel    String
+   }
 
 model sprcty  {
         Id Int    @id @default(autoincrement())
@@ -51,14 +51,28 @@ model sprcty  {
 model sprusl  {
         Id Int    @id @default(autoincrement())
         UslTrf    String
-        UslKod    Int
         UslNam    String
         UslEdn    String
-        UslFlg    String
         UslZen    Int
+    }
+
+
+model sprfrmusl  {
+        Id Int    @id @default(autoincrement())
+        UslFrmHsp Int
+        UslFrmTrf String
         UslMinLet Int
         UslMaxLet Int
-        UslFrmIdn Int
-        UslFrmKod Int
-        UslFrmFlg Int
+    }
+
+
+ model sprorg {
+        Id Int    @id @default(autoincrement())
+        OrgKod    Int
+        OrgCty    Int
+        OrgNam    String
+        OrgNamShr String
+        OrgAdr    String
+        OrgTel    String
+        OrgDmu    String
     }
