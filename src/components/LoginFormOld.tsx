@@ -26,20 +26,20 @@ const INITIAL_STATE = {
   zodErrors: null,
   message: null,
   data: {
-    username: "",
-    password: "",
+    UsrLog: "",
+    UsrPsw: "",
   }
 }
 
 // схема проверки формы
 const FormSchema = z.object({
-  username: z.
+  UsrLog: z.
       string().
       min(1, 'Username is required1'),
-  password: z.
+  UsrPsw: z.
       string().
       min(1, 'Password is required1').
-      min(8, 'Password must have than 8 characters1'),
+      min(4, 'Password must have than 4 characters1'),
 });
 
 const LoginFormOld = () => {
@@ -76,8 +76,8 @@ const LoginFormOld = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
-      password: "",
+      UsrLog: "",
+      UsrPsw: "",
     },
   });
 
@@ -91,12 +91,12 @@ const LoginFormOld = () => {
           {/* username */}
           <FormField
             control={form.control}
-            name="username"
+            name="UsrLog"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input placeholder="username" {...field}  />
+                  <Input placeholder="UsrLog" {...field}  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -106,10 +106,10 @@ const LoginFormOld = () => {
           {/* password */}
           <FormField
             control={form.control}
-            name="password"
+            name="UsrPsw"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Пароль</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="password" {...field}  />
                 </FormControl>
@@ -119,7 +119,7 @@ const LoginFormOld = () => {
           />
         </div>
         <Button className="w-full mt-6" type="submit">
-          Sign in
+          Вход
         </Button>
 
         {/* formAction возврашает состояние в state после выполнении серверной функции login из actions.ts  */}

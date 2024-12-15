@@ -48,9 +48,9 @@ export async function login(
   console.log("Act_Login_formData=", formData);
   
   const formDataObj = {
-    formUsername: formData.get("username") as string,
-    formPassword: formData.get("password") as string,
-    formUserId: formData.get("id") as string,
+    formUsername: formData.get("UsrLog") as string,
+    formPassword: formData.get("UsrPsw") as string,
+    formUserId: formData.get("Id") as string,
   }
 
   console.log("Act_Login_formUsername=", formDataObj.formUsername);
@@ -97,14 +97,14 @@ export async function login(
   //const user = await DB.getUser({username,password});
   // check if email already exist
   // try {
-    const user = await db.user.findUnique({
-      where: { username: formDataObj.formUsername, password: formDataObj.formPassword },
+    const user = await db.sprusr.findUnique({
+      where: { UsrLog: formDataObj.formUsername, UsrPsw: formDataObj.formPassword },
     });
 
     console.log("Act_Login_user=", user);
 
     // если имя пользователя из формы не совпадает с именем из БД , то ошибка
-    if (formDataObj.formUsername !== String(user?.username)) {
+    if (formDataObj.formUsername !== String(user?.UsrLog)) {
       return { ...prevState, message: "wrong credentials" };
     }
     // перевод string to int
@@ -116,7 +116,7 @@ export async function login(
     // если имя пользователя из формы совпадает с именем из БД, то меняем данные сеанса из БД
     session.userId = formDataObj.formUserId;
     session.username = formDataObj.formUsername;
-    session.usertype = user?.usertype;
+    session.usertype = user?.UsrTyp;
     session.isLoggedIn = true;
 
     // сохраняем сеанс

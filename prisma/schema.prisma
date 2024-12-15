@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -23,56 +17,54 @@ model user {
 }
 
 model sprmnubar {
-  id        Int      @id @default(autoincrement())
-  label     String 
-  href      String
-  typeusr   String
-  number    String
+  id      Int    @id @default(autoincrement())
+  label   String
+  href    String
+  typeusr String
+  number  String
 }
 
- model sprusr {
-        Id Int    @id @default(autoincrement())
-        UsrKod    Int
-        UsrOrg    Int
-        UsrLog    String
-        UsrPsw    String
-        UsrTyp    String
-        UsrFio    String
-        UsrTel    String
-   }
+model sprusr {
+  Id     Int    @id @default(autoincrement())
+  UsrKod Int
+  UsrOrg String
+  UsrLog String @unique
+  UsrPsw String
+  UsrTyp String
+  UsrFio String
+  UsrTel String
+}
 
-model sprcty  {
-        Id Int    @id @default(autoincrement())
-        CtyKod    Int
-        CtyNam    String
-        CtyReg    String
-    }
+model sprcty {
+  Id     Int    @id @default(autoincrement())
+  CtyKod Int
+  CtyNam String
+  CtyReg String
+}
 
-model sprusl  {
-        Id Int    @id @default(autoincrement())
-        UslTrf    String
-        UslNam    String
-        UslEdn    String
-        UslZen    Int
-    }
+model sprusl {
+  Id     Int     @id @default(autoincrement())
+  UslTrf String?
+  UslNam String?
+  UslEdn String?
+  UslZen Int?
+}
 
+model sprfrmusl {
+  Id        Int    @id @default(autoincrement())
+  UslFrmHsp Int
+  UslFrmTrf String
+  UslMinLet Int?
+  UslMaxLet Int?
+}
 
-model sprfrmusl  {
-        Id Int    @id @default(autoincrement())
-        UslFrmHsp Int
-        UslFrmTrf String
-        UslMinLet Int
-        UslMaxLet Int
-    }
-
-
- model sprorg {
-        Id Int    @id @default(autoincrement())
-        OrgKod    Int
-        OrgCty    Int
-        OrgNam    String
-        OrgNamShr String
-        OrgAdr    String
-        OrgTel    String
-        OrgDmu    String
-    }
+model sprorg {
+  Id        Int    @id @default(autoincrement())
+  OrgKod    Int
+  OrgCty    Int
+  OrgNam    String
+  OrgNamShr String
+  OrgAdr    String
+  OrgTel    String
+  OrgDmu    String
+}

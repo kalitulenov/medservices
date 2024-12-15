@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "sprusr" ALTER COLUMN "UsrOrg" SET DATA TYPE TEXT;

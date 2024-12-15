@@ -20,3 +20,4 @@ CREATE TABLE "sprusr" (
 
     CONSTRAINT "sprusr_pkey" PRIMARY KEY ("Id")
 );
+
