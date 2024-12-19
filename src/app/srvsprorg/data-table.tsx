@@ -118,23 +118,8 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
               )
           },
 
-        // ---------------------------------------------------------
-        // updateData: (rowIndex: number) => {
-        //   console.log("updateData-originalData=",originalData);
-        //   // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //   // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //   // console.log("revertData-dataSpr2=",dataSpr);
-        //     console.log("updateData-dataSpr1=",dataSpr);
-        //     setOriginalData((old) => old.map((row, index) => 
-        //       {
-        //         if (index === rowIndex) {return {...dataSpr[rowIndex]}}
-        //         else {return row} 
-        //       })
-        //     )
-        // },
-
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex);
+          console.log("data-table-updateRow=",rowIndex,dataSpr);
 
           updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
           setIsValidating(!isValidating);

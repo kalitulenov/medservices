@@ -1,12 +1,12 @@
 
 
 export type SprUsr = {
-    Id:     Number,
-    UsrKod: Number,
-    UsrOrg: String,
-    UsrLog: String,
-    UsrPsw: String,
-    UsrTyp: String,
-    UsrFio: String,
-    UsrTel: String
+    Id:     number,
+    UsrKod: number,
+    UsrOrg: string,
+    UsrLog: string,
+    UsrPsw: string,
+    UsrTyp: string,
+    UsrFio: string,
+    UsrTel: string
   }

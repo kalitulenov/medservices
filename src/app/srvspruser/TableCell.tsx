@@ -48,12 +48,6 @@ type Option = {
              else {setValidationMessage(e.target.validationMessage);}
     };
   
-    //  удалил ветку для (columnMeta?.type===select)
-    // const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    //   setValue(e.target.value)
-    //   tableMeta?.updateData(row.index, column.id, e.target.value)
-    // }
-
     // if (tableMeta?.editedRows[row.id]) {
     //   return (
     //     <input

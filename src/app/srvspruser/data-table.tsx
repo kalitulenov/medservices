@@ -1,6 +1,4 @@
 
-
-
 "use client"
 
 import {
@@ -35,6 +33,8 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { FooterCell } from "./FooterCell";
 //import "./table.css";
 import { deleteRow, updateRow, addRow } from "./actionsUsr";
+//import  useSprUsr  from "./actionsUsr";
+//import  useStudents  from "./actionsStd";
 import { SprUsr } from "./types";
 
   interface DataTableProps<TData, TValue> {
@@ -42,8 +42,13 @@ import { SprUsr } from "./types";
     data: SprUsr[];
   }
 
-export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
+export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
+   
+//export const SprTable  = () => { 
  
+  //const {updateRow, addRow, deleteRow} =  useSprUsr(); 
+  
+  //const [data, setData] = useState<SprUsr[]>([]);
   const [dataSpr, setDataSpr] = useState(() => [...data]);
   const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
@@ -136,7 +141,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         // },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex);
+          console.log("data-table-updateRow=",rowIndex,dataSpr);
 
           updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
           setIsValidating(!isValidating);
@@ -145,17 +150,25 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         updateData: (rowIndex: number, columnId: string, value: string) => {
           setDataSpr((old) =>old.map((row, index) => 
             {
-              if (index === rowIndex) {
-                console.log("updateData-dataSpr1=",dataSpr);
-
-                console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                console.log("updateData-...old=",...old);
-                console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
-                return {...old[rowIndex],[columnId]: value,};}
+              if (index === rowIndex) 
+                {
+                    console.log("updateData-dataSpr1=",dataSpr);
+                    console.log("updateData-data=",data);
+                    console.log("updateData-originalData=",originalData);
+                    console.log("updateData-rowIndex=",rowIndex,columnId,value);
+                    console.log("updateData-...old=",...old);
+                    console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
+                    return {...old[rowIndex],[columnId]: value,};
+                }
               return row;
             })
           );
+   //       setIsValidating(!isValidating);
+   //       data=[...dataSpr];
           console.log("updateData-dataSpr2=",dataSpr);
+          console.log("updateData-data2=",data);
+          console.log("updateData-originalData2=",originalData);
+
 
         },
 
@@ -169,7 +182,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
           const newRow: SprUsr = {
             Id:     id,
             UsrKod: 0,
-            UsrOrg: 0,
+            UsrOrg: "",
             UsrLog: "",
             UsrPsw: "",
             UsrTyp: "",
@@ -190,9 +203,9 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
                 <Input placeholder="Filter hosp name"
-                      value={table.getColumn("OrgNam")?.getFilterValue() as string || ""} 
+                      value={table.getColumn("UsrFio")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
-                          table.getColumn("OrgNam")?.setFilterValue(e.target.value);
+                          table.getColumn("UsrFio")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />

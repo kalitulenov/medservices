@@ -65,14 +65,25 @@ export const columns: ColumnDef<SprUsr>[] = [
             type: 'select',
             options: [
               { value: '', label: 'Select' },
-              { value: 'Алматы', label: 'Алматы' },
-              { value: 'Астана', label: 'Астана' },
-              { value: 'Тараз', label: 'Тараз' },
-              { value: 'Шымкент', label: 'Шымкент' },
+              { value: 'РСВЦ', label: 'РСВЦ' },
+              { value: 'Кокжайлау', label: 'Кокжайлау' },
+              { value: 'Аллергоцентр', label: 'Аллергоцентр' },
+              { value: 'Достар Мед', label: 'Достар Мед' },
+              { value: 'Сункар', label: 'Сункар' },
+              { value: 'Гастроцентр', label: 'Гастроцентр' },
             ],
             required: true,
       },
     },
+
+    // {header: 'Клиника',
+    //   accessorKey: "UsrOrg",
+    //   cell: TableCell,
+    //   meta: {
+    //         type: 'text',
+    //   },
+    // },
+
 
     {
       header: "Логин",  
