@@ -4,7 +4,7 @@ export type SprOrg = {
     OrgKod:     number
     OrgCty:     number
     OrgNam:     string
-    OrgNamShr:  String
+    OrgNamShr:  string
     OrgAdr:     string
     OrgTel:     string
     OrgDmu:     string

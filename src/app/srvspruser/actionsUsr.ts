@@ -28,7 +28,7 @@ export async function updateRow(id: number, postData: SprUsr) {
                 UsrLog: postData.UsrLog,
                 UsrPsw: postData.UsrPsw,
                 UsrTel: postData.UsrTel,
-                UsrFio: "postData.UsrFio",
+                UsrFio: postData.UsrFio,
                 UsrTyp: postData.UsrTyp}
          } 
     );
