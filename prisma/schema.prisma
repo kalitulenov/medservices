@@ -25,46 +25,46 @@ model sprmnubar {
 }
 
 model sprusr {
-  Id     Int    @id @default(autoincrement())
-  UsrKod Int
-  UsrOrg String
-  UsrLog String @unique
-  UsrPsw String
-  UsrTyp String
-  UsrFio String
-  UsrTel String
+  id     Int    @id @default(autoincrement())
+  usrkod Int
+  usrorg String
+  usrlog String @unique
+  usrpsw String
+  usrtyp String
+  usrfio String
+  usrtel String
 }
 
 model sprcty {
-  Id     Int    @id @default(autoincrement())
-  CtyKod Int
-  CtyNam String
-  CtyReg String
+  id     Int    @id @default(autoincrement())
+  ctykod Int
+  ctynam String
+  ctyreg String
 }
 
 model sprusl {
-  Id     Int     @id @default(autoincrement())
-  UslTrf String?
-  UslNam String?
-  UslEdn String?
-  UslZen Int?
+  id     Int     @id @default(autoincrement())
+  usltrf String?
+  uslnam String?
+  usledn String?
+  uslzen Int?
 }
 
-model sprfrmusl {
-  Id        Int    @id @default(autoincrement())
-  UslFrmHsp Int
-  UslFrmTrf String
-  UslMinLet Int?
-  UslMaxLet Int?
+model spruslfrm {
+  id        Int    @id @default(autoincrement())
+  uslfrmhsp Int
+  uslfrmtrf String
+  uslminlet Int?
+  uslmaxlet Int?
 }
 
 model sprorg {
-  Id        Int    @id @default(autoincrement())
-  OrgKod    Int
-  OrgCty    Int
-  OrgNam    String
-  OrgNamShr String
-  OrgAdr    String
-  OrgTel    String
-  OrgDmu    String
+  id        Int    @id @default(autoincrement())
+  orgkod    Int
+  orgcty    Int
+  orgnam    String
+  orgnamshr String
+  orgadr    String
+  orgtel    String
+  orgdmu    String
 }

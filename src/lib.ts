@@ -3,6 +3,7 @@ import { SessionOptions } from "iron-session";
 
 export interface SessionData {
     userId?: string;
+    userorg?: string;
     username?: string;
     usertype?: string;      // признак типа пользователя
     isOpen?: boolean;       // признак открыт меню

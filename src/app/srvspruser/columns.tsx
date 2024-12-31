@@ -46,12 +46,12 @@ export const columns: ColumnDef<SprUsr>[] = [
                   </Button>
                 )
         },
-        accessorKey: "Id"
+        accessorKey: "id"
     },
 
     {
       header: "Код",  
-      accessorKey: "UsrKod",
+      accessorKey: "usrkod",
       cell: TableCell,
       meta: {
         type: 'number',
@@ -59,7 +59,7 @@ export const columns: ColumnDef<SprUsr>[] = [
      },
 
      {header: 'Клиника',
-      accessorKey: "UsrOrg",
+      accessorKey: "usrorg",
       cell: TableCell,
       meta: {
             type: 'select',
@@ -87,7 +87,7 @@ export const columns: ColumnDef<SprUsr>[] = [
 
     {
       header: "Логин",  
-      accessorKey: "UsrLog",
+      accessorKey: "usrlog",
       cell: TableCell,
       meta: {
         type: 'text',
@@ -96,7 +96,7 @@ export const columns: ColumnDef<SprUsr>[] = [
 
     {
       header: "Пароль",  
-      accessorKey: "UsrPsw",
+      accessorKey: "usrpsw",
       cell: TableCell,
       meta: {
         type: 'text',
@@ -105,7 +105,7 @@ export const columns: ColumnDef<SprUsr>[] = [
 
     {
         header: "Тип",  
-        accessorKey: "UsrTyp",
+        accessorKey: "usrtyp",
         cell: TableCell,
         meta: {
           type: 'text',

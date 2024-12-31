@@ -9,25 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { SprUsl } from './types';
 
 import { useEffect, useState } from "react";
+import { TableCell } from "./TableCell";
+import { EditCell } from "./EditCell";
 
 export const columns: ColumnDef<SprUsl>[] = [
-    {
-      id: "select",
-      header: ({table})=>{
-        return <Checkbox
-                  checked={table.getIsAllPageRowsSelected()}
-                  onCheckedChange={(value)=>{table.toggleAllPageRowsSelected(!!value);}}
-                />
-      },
-      cell: ({row}) => {
-        return <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value)=>{row.toggleSelected(!!value);}}
-      />
-      },
-      enableSorting: false,
-      enableHiding: false,
-    },
     {
         // header: "ID",  
         // для сортировки столбца
@@ -41,7 +26,7 @@ export const columns: ColumnDef<SprUsl>[] = [
                   </Button>
                 )
         },
-        accessorKey: "UslTrf"
+        accessorKey: "usltrf"
     },
 
     // {
@@ -51,16 +36,43 @@ export const columns: ColumnDef<SprUsl>[] = [
 
     {
         header: "Услуга",  
-        accessorKey: "UslNam"
+        accessorKey: "uslnam"
     },
     {
         header: "Ед.изм",  
-        accessorKey: "UslEdn"
+        accessorKey: "usledn"
     },
     {
         header: "Цена",  
-        accessorKey: "UslZen"
+        accessorKey: "uslzen"
+   },
+
+   {
+      header: "*",
+      accessorKey: "id",
+      cell: TableCell,
+      meta: {type: 'number',},
+    },
+    {
+      header: "Min_Возраст",  
+      accessorKey: "uslminlet",
+      cell: TableCell,
+      meta: {type: 'number',},
+    },
+    {
+      header: "Max_Возраст",  
+      accessorKey: "uslmaxlet",
+      cell: TableCell,
+      meta: {type: 'number',},
+    },
+    {
+      header: "Edit",  
+      //cell: ({ row, table }) => EditCell({ row, table })
+      cell: EditCell,
     }
+
+
+
 ]
 
 

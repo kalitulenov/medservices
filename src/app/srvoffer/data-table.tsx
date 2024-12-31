@@ -41,8 +41,8 @@ import { SprUsl } from "./types";
 
 export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
  
-  //const [dataSpr, setDataSpr] = useState(() => [...data]);
-  //const [originalData, setOriginalData] = useState(() => [...data]);
+  const [dataSpr, setDataSpr] = useState(() => [...data]);
+  const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
@@ -54,10 +54,10 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
 
   //const [datainp, setDatainp] = useState(() => [...data]); // для обновления
   // ------------------------------------------------------
-  //const [editedRows, setEditedRows] = React.useState({});
+  const [editedRows, setEditedRows] = React.useState({});
   //const [validRows, setValidRows] = React.useState({});
 
-  //const [isValidating, setIsValidating] = React.useState(true);
+  const [isValidating, setIsValidating] = React.useState(true);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index
@@ -97,25 +97,58 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
       pagination,
     },
     meta: {
-        // ---------------------------------------------------------
-        // revertData: (rowIndex: number) => {
-        //     console.log("revertData-originalData=",originalData);
-        //     // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //     // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //     // console.log("revertData-dataSpr2=",dataSpr);
-        //       console.log("revertData-dataSpr1=",dataSpr);
-        //       setIsValidating(!isValidating);
+      editedRows,
+      setEditedRows,
 
-        //       setDataSpr((old) => old.map((row, index) => 
-        //         {
-        //           if (index === rowIndex) {return {...originalData[rowIndex]}}
-        //           else {return row} 
-        //         })
-        //       )
-        //   },
-  
+      // ---------------------------------------------------------
+      revertData: (rowIndex: number) => {
+          console.log("revertData-originalData=",originalData);
+          // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
+          // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
+          // console.log("revertData-dataSpr2=",dataSpr);
+            console.log("revertData-dataSpr1=",dataSpr);
+            setIsValidating(!isValidating);
+
+            setDataSpr((old) => old.map((row, index) => 
+              {
+                if (index === rowIndex) {return {...originalData[rowIndex]}}
+                else {return row} 
+              })
+            )
+        },
+
+      updateRow: (rowIndex: number) => {
+        console.log("data-table-updateRow=",rowIndex,dataSpr);
+
+        updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
+        setIsValidating(!isValidating);
       },
-    });
+
+      updateData: (rowIndex: number, columnId: string, value: string) => {
+        setDataSpr((old) =>old.map((row, index) => 
+          {
+            if (index === rowIndex) 
+              {
+                  console.log("updateData-dataSpr1=",dataSpr);
+                  console.log("updateData-data=",data);
+                  console.log("updateData-originalData=",originalData);
+                  console.log("updateData-rowIndex=",rowIndex,columnId,value);
+                  console.log("updateData-...old=",...old);
+                  console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
+                  return {...old[rowIndex],[columnId]: value,};
+              }
+            return row;
+          })
+        );
+ //       setIsValidating(!isValidating);
+ //       data=[...dataSpr];
+        console.log("updateData-dataSpr2=",dataSpr);
+        console.log("updateData-data2=",data);
+        console.log("updateData-originalData2=",originalData);
+      },
+
+    },
+  });
 
 
   return (
@@ -125,9 +158,9 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
                 <Input placeholder="Фильтр по услуге"
-                      value={table.getColumn("UslNam")?.getFilterValue() as string || ""} 
+                      value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
-                          table.getColumn("UslNam")?.setFilterValue(e.target.value);
+                          table.getColumn("uslnam")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />

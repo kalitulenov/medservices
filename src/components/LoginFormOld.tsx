@@ -91,12 +91,12 @@ const LoginFormOld = () => {
           {/* username */}
           <FormField
             control={form.control}
-            name="UsrLog"
+            name="usrlog"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input placeholder="UsrLog" {...field}  />
+                  <Input placeholder="usrlog" {...field}  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -106,7 +106,7 @@ const LoginFormOld = () => {
           {/* password */}
           <FormField
             control={form.control}
-            name="UsrPsw"
+            name="usrpsw"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Пароль</FormLabel>

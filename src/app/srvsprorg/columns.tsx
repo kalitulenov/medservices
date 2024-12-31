@@ -45,11 +45,11 @@ export const columns: ColumnDef<SprOrg>[] = [
                   </Button>
                 )
         },
-        accessorKey: "Id"
+        accessorKey: "id"
     },
     {
         header: "Клиника",  
-        accessorKey: "OrgNam",
+        accessorKey: "orgnam",
         cell: TableCell,
         meta: {
           type: 'text',
@@ -66,7 +66,7 @@ export const columns: ColumnDef<SprOrg>[] = [
     },
     {
         header: "Адрес",  
-        accessorKey: "OrgAdr",
+        accessorKey: "orgadr",
         cell: TableCell,
         meta: {
           type: 'text',
@@ -74,7 +74,7 @@ export const columns: ColumnDef<SprOrg>[] = [
     },
     {
         header: "Телефон",  
-        accessorKey: "OrgTel",
+        accessorKey: "orgtel",
         cell: TableCell,
         meta: {
           type: 'text',
@@ -82,7 +82,7 @@ export const columns: ColumnDef<SprOrg>[] = [
     },
     {
         header: "Даму",  
-        accessorKey: "OrgDmu",
+        accessorKey: "orgdmu",
         cell: TableCell,
         meta: {
           type: 'text',
