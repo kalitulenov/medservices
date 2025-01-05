@@ -11,8 +11,9 @@ import { SprUsl } from './types';
 import { useEffect, useState } from "react";
 import { TableCell } from "./TableCell";
 import { EditCell } from "./EditCell";
+import { sprfrmusl } from "@prisma/client";
 
-export const columns: ColumnDef<SprUsl>[] = [
+export const columns: ColumnDef<sprfrmusl>[] = [
     {
         // header: "ID",  
         // для сортировки столбца
@@ -43,15 +44,20 @@ export const columns: ColumnDef<SprUsl>[] = [
         accessorKey: "usledn"
     },
     {
-        header: "Цена",  
-        accessorKey: "uslzen"
-   },
-
-   {
       header: "*",
-      accessorKey: "id",
+      accessorKey: "uslfrmflg",
       cell: TableCell,
-      meta: {type: 'number',},
+      // cell: ({row}) => {
+      //   const offer = row.original;
+      //   var offerflg = offer.uslfrmflg;
+      //   return <Checkbox checked={offerflg}
+      //   onCheckedChange={()=>{
+      //     offerflg=!offerflg;
+      //     console.log("TableCell-onCheckedChange=",offerflg);
+      //   }}
+      //   />},
+
+      meta: {type: 'boolean',},
     },
     {
       header: "Min_Возраст",  

@@ -18,13 +18,19 @@ export default async function OfferPage() {
         //  const response = await db.sprusl.findMany({take: 5000});
         //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
           const orgnam = session.userorg;
-          const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn,SprUsl.UslZen, 
-                                                     SprOrg.OrgNam, SprOrg.OrgDmu,SprOrg.OrgTel,SprUslFrm.UslMinLet,SprUslFrm.UslMaxLet 
-                                              FROM SprOrg INNER JOIN SprUslFrm ON SprOrg.OrgKod = SprUslFrm.UslFrmHsp 
-                                                           RIGHT OUTER JOIN SprUsl ON SprUslFrm.UslFrmTrf = SprUsl.UslTrf
-                                              WHERE SprOrg.OrgNam = ${orgnam}
-                                              ORDER BY SprUsl.UslTrf`;
+          const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
+                                                     SprUsl.UslZen, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet
+                                              FROM SprUsl LEFT OUTER JOIN
+                                                (SELECT SprUslFrm.id, true AS UslFrmFlg, UslFrmHsp,UslFrmTrf, 
+                                                        UslMinLet, UslMaxLet
+                                                 FROM SprUslFrm INNER JOIN SprOrg 
+                                                                ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
+                                                 WHERE SprOrg.ORGNAM = ${orgnam}) AS T 
+                                                        ON (SprUsl.UslTrf = T.UslFrmTrf)
+                                              WHERE LENGTH(SprUsl.UslTrf)=11
+                                              ORDER BY SprUsl.UslTrf;`
 
+          console.log("orgnam=",orgnam);
           console.log(response);
           return response;
     } catch (error) {

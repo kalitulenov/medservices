@@ -129,11 +129,11 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
           {
             if (index === rowIndex) 
               {
-                  console.log("updateData-dataSpr1=",dataSpr);
-                  console.log("updateData-data=",data);
-                  console.log("updateData-originalData=",originalData);
+                  // console.log("updateData-dataSpr1=",dataSpr);
+                  // console.log("updateData-data=",data);
+                  // console.log("updateData-originalData=",originalData);
                   console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                  console.log("updateData-...old=",...old);
+                  // console.log("updateData-...old=",...old);
                   console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
                   return {...old[rowIndex],[columnId]: value,};
               }
@@ -142,9 +142,9 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         );
  //       setIsValidating(!isValidating);
  //       data=[...dataSpr];
-        console.log("updateData-dataSpr2=",dataSpr);
-        console.log("updateData-data2=",data);
-        console.log("updateData-originalData2=",originalData);
+        // console.log("updateData-dataSpr2=",dataSpr);
+        // console.log("updateData-data2=",data);
+        // console.log("updateData-originalData2=",originalData);
       },
 
     },

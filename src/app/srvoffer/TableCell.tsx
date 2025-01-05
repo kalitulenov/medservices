@@ -5,6 +5,7 @@
 
 import { useState, useEffect, ChangeEvent } from "react";
 import "./table.css";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type Option = {
     label: string;
@@ -20,21 +21,31 @@ type Option = {
 
     // console.log("TableCell-tableMeta=",tableMeta);
     // console.log("TableCell-columnMeta=",columnMeta);
- 
+    console.log("TableCell-value=",value);
+   
     useEffect(() => {setValue(initialValue)}, [initialValue])
 
+    // const onCheckedChange = () => {
+    //   const offer = row.original;
+    //   var offerflg = offer.uslfrmflg;
+    //   offerflg=!offerflg;
+    //   console.log("TableCell-onCheckedChange2=",offerflg);
+    //   return <Checkbox checked={offerflg}
+    //     />
+    // }
+
     const onBlur = () => {
-      // console.log("TableCell-rowIndex=",row.index, column.id, value);
+      console.log("TableCell-onBlur=",row.index, column.id, value);
       tableMeta?.updateData(row.index, column.id, value)
     }
-
-      
+ 
     const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
       displayValidationMessage(e);
       setValue(e.target.value);
       console.log("TableCell-onSelectChange=",row.index, column.id, e.target.value, e.target.validity.valid);
       tableMeta?.updateData(row.index, column.id, e.target.value, e.target.validity.valid);
     };
+      
 
     const displayValidationMessage = <T extends HTMLInputElement | HTMLSelectElement>(e: ChangeEvent<T>) =>{
       if (columnMeta?.validate) {
@@ -49,47 +60,73 @@ type Option = {
       } else if (e.target.validity.valid) {setValidationMessage("");} 
              else {setValidationMessage(e.target.validationMessage);}
     };
-  
-    // if (tableMeta?.editedRows[row.id]) {
-    //   return (
-    //     <input
-    //       value={value}
-    //       onChange={e => setValue(e.target.value)}
-    //       onBlur={onBlur}
-    //       type={columnMeta?.type || "text"}
-    //     />)
-      
-    // }
 
+    if (tableMeta?.editedRows[row.id]) 
+      {
+        switch (columnMeta?.type)
+        {
+              case "select":
+                return <select
+                    onChange={onSelectChange}
+                    value={initialValue}
+                    required={columnMeta?.required}
+                    title={validationMessage}
+                  >
+                    {columnMeta?.options?.map((option: Option) => 
+                      (<option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                      )
+                    )}
+                 </select>
+              case "boolean":
+                // const offer = row.original.uslfrmflg;
+                // var offerflg = offer.uslfrmflg;
+                // console.log("TableCell-onCheckedChange1=",offerflg);
+               // return <Checkbox checked={offerflg} onCheckedChange={onCheckedChange}
+                // return <Checkbox checked={offerflg}
+                //                   onCheckedChange={()=>{
+                //                     offerflg=!offerflg;
+                //                     setValue(offerflg);
+                //                     console.log("TableCell-onCheckedChange=",offerflg);
+                //                   }}
+                // />
 
-    if (tableMeta?.editedRows[row.id]) {
-      return columnMeta?.type === "select" ? (
-        <select
-          onChange={onSelectChange}
-          value={initialValue}
-          required={columnMeta?.required}
-          title={validationMessage}
-        >
-          {columnMeta?.options?.map((option: Option) => 
-            (<option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          )
-          
-          )}
-        </select>
-      ) : (
-        <input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onBlur={onBlur}
-          type={columnMeta?.type || "text"}
-          required={columnMeta?.required}
-          pattern={columnMeta?.pattern}
-          title={validationMessage}
-        />
-      );
-    }
-  
+         
+                return <input type="checkbox" 
+                              checked={row.original.uslfrmflg}
+                              onBlur={onBlur}
+                              onChange={()=>
+                                {row.original.uslfrmflg=!row.original.uslfrmflg;
+                                  setValue(row.original.uslfrmflg);
+                                 console.log("TableCell-onCheckedChange2=",!row.original.uslfrmflg);}} 
+                                 />
+              default: 
+                  return <input
+                      value={value}
+                      onChange={(e) => setValue(e.target.value)}
+                      onBlur={onBlur}
+                      type={columnMeta?.type || "text"}
+                      required={columnMeta?.required}
+                      pattern={columnMeta?.pattern}
+                      title={validationMessage}
+                    />
+              
+    }}
+     else 
+        {
+          //console.log("TableCell-columnMeta?.type=",columnMeta?.type);
+          if (columnMeta?.type === "boolean") {
+            const offer = row.original;
+          // console.log("TableCell-offer=",offer);
+
+            const offerflg = offer.uslfrmflg;
+            //console.log("TableCell-offerflg=",offerflg);
+            return <Checkbox checked={offerflg}  
+          //    onCheckedChange={onCheckedChange}
+
+            />}
+        }
+
     return <span>{value}</span>
   }
