@@ -32,11 +32,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 //import { FooterCell } from "./FooterCell";
-import { SprUsl } from "./types";
+import { SprUslFrm } from "./types";
 
   interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprUsl, TValue>[];
-    data: SprUsl[];
+    columns: ColumnDef<SprUslFrm, TValue>[];
+    data: SprUslFrm[];
   }
 
 export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
@@ -48,7 +48,10 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   // для фильтрации ColumnFiltersState получаем из таблицы
   const [columnFilters,setColumnFilters] = useState<ColumnFiltersState>([])
   // для скрытие колонок. VisibilityState получаем из таблицы
-  const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
+  //const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = useState({
+    uslfrmhsp: false, //hide this column by default
+  });
   // для отмеченных строк
   const [rowSelection,setrowSelection] = useState({})
 

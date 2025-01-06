@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SprUsl } from './types';
+import { SprUslFrm } from './types';
 
 import { useEffect, useState } from "react";
 import { TableCell } from "./TableCell";
 import { EditCell } from "./EditCell";
 import { sprfrmusl } from "@prisma/client";
 
-export const columns: ColumnDef<sprfrmusl>[] = [
+export const columns: ColumnDef<SprUslFrm>[] = [
     {
         // header: "ID",  
         // для сортировки столбца
@@ -34,7 +34,11 @@ export const columns: ColumnDef<sprfrmusl>[] = [
     //     header: "Тарификатор",  
     //     accessorKey: "UslTrf"
     // },
-
+    {
+      header: "КодКлиники",  
+      accessorKey: "uslfrmhsp",
+      enableHiding: false,
+    },
     {
         header: "Услуга",  
         accessorKey: "uslnam"

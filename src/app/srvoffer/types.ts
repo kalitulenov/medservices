@@ -1,10 +1,12 @@
 
 
-
-export type SprUsl = {
-    Id:         number
-    UslTrf:     string
-    UslNam:     string
-    UslEdn:     string
-    UslZen:     number
+export type SprUslFrm = {
+  id: number
+  uslfrmhsp: number
+  uslfrmtrf: string
+  uslfrmedn: string 
+  uslfrmnam: string
+  uslfrmflg: boolean
+  uslminlet: number
+  uslmaxlet: number
 }

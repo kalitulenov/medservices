@@ -19,7 +19,7 @@ export default async function OfferPage() {
         //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
           const orgnam = session.userorg;
           const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
-                                                     SprUsl.UslZen, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet
+                                                     SprUsl.UslZen, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,T.UslFrmHsp
                                               FROM SprUsl LEFT OUTER JOIN
                                                 (SELECT SprUslFrm.id, true AS UslFrmFlg, UslFrmHsp,UslFrmTrf, 
                                                         UslMinLet, UslMaxLet
