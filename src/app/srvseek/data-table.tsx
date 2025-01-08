@@ -1,6 +1,8 @@
 
 
 
+
+
 "use client"
 
 import {
@@ -32,7 +34,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 //import { FooterCell } from "./FooterCell";
-import { updateRow } from "./actionsOffer";
+//import { updateRow } from "./actionsSeek";
+import "./table.css";
+
 
 import { SprUslFrm } from "./types";
 
@@ -70,6 +74,13 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     pageSize: 10, //default page size
     });
   
+//   useEffect(() => {
+//       console.log("useEffect=",isValidating);
+//   //   if (isValidating) return; 
+//       setDataSpr([...originalData]);
+//       data = [...originalData]
+//   }, [isValidating]);
+
   //console.log("data-table-data=",data);
   //console.log("data-table-dataSpr=",dataSpr);
   //console.log("data-table-originalData=",originalData);
@@ -116,35 +127,30 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
             )
         },
 
-      updateRow: (rowIndex: number) => {
-        console.log("data-table-updateRow=",rowIndex,dataSpr);
+    //   updateRow: (rowIndex: number) => {
+    //     console.log("data-table-updateRow=",rowIndex,dataSpr);
 
-        updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
-        setIsValidating(!isValidating);
-      },
+    //     updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
+    //     setIsValidating(!isValidating);
+    //   },
 
-      updateData: (rowIndex: number, columnId: string, value: string) => {
-        setDataSpr((old) =>old.map((row, index) => 
-          {
-            if (index === rowIndex) 
-              {
-                  // console.log("updateData-dataSpr1=",dataSpr);
-                  // console.log("updateData-data=",data);
-                  // console.log("updateData-originalData=",originalData);
-                  console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                  // console.log("updateData-...old=",...old);
-                  console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
-                  return {...old[rowIndex],[columnId]: value,};
-              }
-            return row;
-          })
-        );
- //       setIsValidating(!isValidating);
- //       data=[...dataSpr];
-        // console.log("updateData-dataSpr2=",dataSpr);
-        // console.log("updateData-data2=",data);
-        // console.log("updateData-originalData2=",originalData);
-      },
+    //   updateData: (rowIndex: number, columnId: string, value: string) => {
+    //     setDataSpr((old) =>old.map((row, index) => 
+    //       {
+    //         if (index === rowIndex) 
+    //           {
+    //               // console.log("updateData-dataSpr1=",dataSpr);
+    //               // console.log("updateData-data=",data);
+    //               // console.log("updateData-originalData=",originalData);
+    //               console.log("updateData-rowIndex=",rowIndex,columnId,value);
+    //               // console.log("updateData-...old=",...old);
+    //               console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
+    //               return {...old[rowIndex],[columnId]: value,};
+    //           }
+    //         return row;
+    //       })
+    //     );
+    //  },
 
     },
   });
@@ -154,9 +160,9 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     <div className="w-full">
       {/* ----------   заголовок -------------------------- */}
         <div className="flex">
-            {/* для полей фильтраций */}
-            <div className="flex items-center py-4">
-                <Input placeholder="Фильтр по услуге"
+            {/* для полей фильтраций по тарификатору */}
+            <div className="flex items-center py-8">
+                <Input placeholder="Фильтр по тарификатору"
                       value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
                           table.getColumn("uslnam")?.setFilterValue(e.target.value);
@@ -165,29 +171,17 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
                 />
             </div>
 
-            {/* для выпадающей меню className="ml-auto" сдвиг налево до упора*/}
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outline" className="ml-auto">
-                  Реквизиты
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table.getAllColumns().filter(column=>column.getCanHide()).map(column=>{
-                  return (
-                    <DropdownMenuCheckboxItem key={column.id} 
-                                              className="capitalize"
-                                              checked={column.getIsVisible()}
-                                              onCheckedChange={(value: boolean)=>{
-                                                                column.toggleVisibility(!!value);
-                                                              }}
-                      >
-                        {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* для полей фильтраций по наменованию */}
+            {/* <div className="flex items-center py-4">
+                <Input placeholder="Фильтр по наменованию"
+                      value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
+                      onChange={(e) => {
+                          table.getColumn("uslnam")?.setFilterValue(e.target.value);
+                      }}
+                      className="max-w-sm"
+                />
+            </div> */}
+
         </div>
 
       {/* таблица */}

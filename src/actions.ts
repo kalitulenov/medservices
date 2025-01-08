@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 
 import {z}  from "zod";
 
-
 import { db } from "@/lib/db";
 
 // ==============================================================================================
@@ -97,14 +96,26 @@ export async function login(
   //const user = await DB.getUser({username,password});
   // check if email already exist
   // try {
-    const user = await db.sprusr.findUnique({
-      where: { usrlog: formDataObj.formUsername, usrpsw: formDataObj.formPassword },
-    });
 
-    console.log("Act_Login_user=", user);
+  // -------------- Вариант 1 -------------------------------------
+    // const user = await db.sprusr.findUnique({
+    //   where: { usrlog: formDataObj.formUsername, usrpsw: formDataObj.formPassword },
+    // });
 
+  // -------------- Вариант 2 -------------------------------------
+    const userArr: any = await db.$queryRaw`SELECT SprUsr.*,SprOrg.OrgKod 
+                                        FROM SprUsr LEFT OUTER JOIN SprOrg  
+                                                    ON SprUsr.UsrOrg = SprOrg.OrgNam
+                                        WHERE SprUsr.UsrLog=${formDataObj.formUsername} AND
+                                              SprUsr.UsrPsw=${formDataObj.formPassword};`
+
+    if (!userArr || !userArr.length)  return { ...prevState, message: "нет организаций" };
+
+    console.log("Act_Login_userArr=", userArr);
+   // console.log("Act_Login_user2=", formDataObj.formUsername,user?.usrlog);
+    const user = userArr[0];
     // если имя пользователя из формы не совпадает с именем из БД , то ошибка
-    if (formDataObj.formUsername !== String(user?.usrlog)) {
+    if (formDataObj.formUsername !== String(user.usrlog)) {
       return { ...prevState, message: "wrong credentials" };
     }
     // перевод string to int
@@ -115,6 +126,7 @@ export async function login(
 
     // если имя пользователя из формы совпадает с именем из БД, то меняем данные сеанса из БД
     session.userId = formDataObj.formUserId;
+    session.userorgkod = user?.orgkod;
     session.userorg = user?.usrorg;
     session.username = formDataObj.formUsername;
     session.usertype = user?.usrtyp;

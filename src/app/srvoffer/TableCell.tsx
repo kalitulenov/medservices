@@ -21,7 +21,7 @@ type Option = {
 
     // console.log("TableCell-tableMeta=",tableMeta);
     // console.log("TableCell-columnMeta=",columnMeta);
-    console.log("TableCell-value=",value);
+   // console.log("TableCell-value=",value);
    
     useEffect(() => {setValue(initialValue)}, [initialValue])
 

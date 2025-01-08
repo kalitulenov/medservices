@@ -1,5 +1,7 @@
 
 
+
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -8,8 +10,8 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SprUslFrm } from './types';
 
-import { TableCell } from "./TableCell";
-import { EditCell } from "./EditCell";
+import { useEffect, useState } from "react";
+import { spruslfrm } from "@prisma/client";
 
 export const columns: ColumnDef<SprUslFrm>[] = [
     {
@@ -53,36 +55,30 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     {
       header: "*",
       accessorKey: "uslfrmflg",
-      cell: TableCell,
-      // cell: ({row}) => {
-      //   const offer = row.original;
-      //   var offerflg = offer.uslfrmflg;
-      //   return <Checkbox checked={offerflg}
-      //   onCheckedChange={()=>{
-      //     offerflg=!offerflg;
-      //     console.log("TableCell-onCheckedChange=",offerflg);
-      //   }}
-      //   />},
-
-      meta: {type: 'boolean',},
+      cell: ({row}) => {
+        const offer = row.original;
+        var offerflg = offer.uslfrmflg;
+        return <Checkbox checked={offerflg}
+        />},
+      //meta: {type: 'boolean',},
     },
     {
       header: "Min_Возраст",  
       accessorKey: "uslminlet",
-      cell: TableCell,
-      meta: {type: 'number',},
+      //cell: TableCell,
+      //meta: {type: 'number',},
     },
     {
       header: "Max_Возраст",  
       accessorKey: "uslmaxlet",
-      cell: TableCell,
-      meta: {type: 'number',},
-    },
-    {
-      header: "Edit",  
-      //cell: ({ row, table }) => EditCell({ row, table })
-      cell: EditCell,
+      //cell: TableCell,
+      //meta: {type: 'number',},
     }
+    // {
+    //   header: "Edit",  
+    //   //cell: ({ row, table }) => EditCell({ row, table })
+    //   //cell: EditCell,
+    // }
 
 
 

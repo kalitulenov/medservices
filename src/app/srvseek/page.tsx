@@ -1,6 +1,7 @@
 
 
 
+
 import React from 'react'
 import { SprTable } from './data-table'
 import { columns } from './columns'
@@ -32,9 +33,9 @@ export default async function OfferPage() {
                                               WHERE LENGTH(SprUsl.UslTrf)=11
                                               ORDER BY SprUsl.UslTrf  LIMIT 25;`
 
-          // console.log("orgnam=",orgnam);
-          // console.log("orgkod=",orgkod);
-          // console.log(response);
+          console.log("orgnam=",orgnam);
+          console.log("orgkod=",orgkod);
+          console.log(response);
           return response;
     } catch (error) {
       console.error(error);
@@ -42,7 +43,7 @@ export default async function OfferPage() {
   }
   
   // загрузка меню из БД ---------------------------
-  console.log("OfferPage")
+  console.log("SeekPage")
   const defaultData: any = await loader();
   // если пусто ---------------------------
   //if (!defaultData) return <h1>no datafound</h1>
