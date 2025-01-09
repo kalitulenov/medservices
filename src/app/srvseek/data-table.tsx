@@ -161,7 +161,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
       {/* ----------   заголовок -------------------------- */}
         <div className="flex">
             {/* для полей фильтраций по тарификатору */}
-            <div className="flex items-center py-8">
+            <div className="flex items-center py-2 ">
                 <Input placeholder="Фильтр по тарификатору"
                       value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
