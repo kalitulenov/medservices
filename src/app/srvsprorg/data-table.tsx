@@ -121,7 +121,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         updateRow: (rowIndex: number) => {
           console.log("data-table-updateRow=",rowIndex,dataSpr);
 
-          updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
+          updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
           setIsValidating(!isValidating);
         },
 
@@ -138,21 +138,22 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         },
 
         removeRow: (rowIndex: number) => {
-          deleteRow(dataSpr[rowIndex].Id);
+          deleteRow(dataSpr[rowIndex].id);
           setIsValidating(!isValidating);
         },
   
         addRow: () => {
+          console.log("addRow=");
           const id = Math.floor(Math.random() * 10000);
           const newRow: SprOrg = {
-            Id: id,
-            OrgKod: id,
-            OrgCty: 1,
-            OrgNam: "",
-            OrgNamShr: "",
-            OrgAdr: "",
-            OrgTel: "",
-            OrgDmu: ""
+            id: id,
+            orgkod: id,
+            orgcty: 1,
+            orgnam: "",
+            orgnamshr: "",
+            orgadr: "",
+            orgtel: "",
+            orgdmu: ""
           };
           addRow(newRow);
         },

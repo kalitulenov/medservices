@@ -108,13 +108,19 @@ export const columns: ColumnDef<SprUsr>[] = [
         accessorKey: "usrtyp",
         cell: TableCell,
         meta: {
-          type: 'text',
+          type: 'select',
+          options: [
+            { value: '', label: 'Select' },
+            { value: 'Adm', label: 'Adm' },
+            { value: 'Usr', label: 'Usr' },
+          ],
+          required: true,
         },
     },
 
     {
       header: "ФИО",  
-      accessorKey: "UsrFio",
+      accessorKey: "usrfio",
       cell: TableCell,
       meta: {
         type: 'text',
@@ -123,7 +129,7 @@ export const columns: ColumnDef<SprUsr>[] = [
 
     {
         header: "Телефон",  
-        accessorKey: "UsrTel",
+        accessorKey: "usrtel",
         cell: TableCell,
         meta: {
           type: 'text',

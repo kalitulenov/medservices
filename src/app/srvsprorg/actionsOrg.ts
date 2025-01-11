@@ -24,11 +24,11 @@ export async function updateRow(id: number, postData: SprOrg) {
     await db.sprorg.update
     (
         {
-         where: {Id:id},
-         data: {OrgAdr: postData.OrgAdr,
-                OrgNam: postData.OrgNam,
-                OrgTel: postData.OrgTel,
-                OrgDmu: postData.OrgDmu}
+         where: {id:id},
+         data: {orgadr: postData.orgadr,
+                orgnam: postData.orgnam,
+                orgtel: postData.orgtel,
+                orgdmu: postData.orgdmu}
          } 
     );
  }
@@ -38,7 +38,7 @@ export async function deleteRow(id: number) {
     console.log("removeRow=",id);
     await db.sprorg.delete
     (
-        {where: {Id:id}} 
+        {where: {id:id}} 
     );
  }
 
@@ -49,21 +49,13 @@ export async function addRow(postData: SprOrg) {
     await db.sprorg.create
     (
         {
-         data: {Id: postData.Id,
-                OrgKod: postData.OrgKod,
-                OrgCty: 1,
-                OrgAdr: postData.OrgAdr,
-                OrgNam: postData.OrgNam,
-                OrgNamShr: postData.OrgNam,
-                OrgTel: postData.OrgTel,
-                OrgDmu: postData.OrgDmu}
+         data: {orgkod: postData.orgkod,
+                orgcty: 1,
+                orgadr: postData.orgadr,
+                orgnam: postData.orgnam,
+                orgnamshr: postData.orgnamshr,
+                orgtel: postData.orgtel,
+                orgdmu: postData.orgdmu}
          } 
     );
  }
-
-//  const user = await prisma.user.create({
-//     data: {
-//       email: 'elsa@prisma.io',
-//       name: 'Elsa Prisma',
-//     },
-//   })

@@ -1,11 +1,11 @@
 
 export type SprOrg = {
-    Id:         number
-    OrgKod:     number
-    OrgCty:     number
-    OrgNam:     string
-    OrgNamShr:  string
-    OrgAdr:     string
-    OrgTel:     string
-    OrgDmu:     string
+    id:         number
+    orgkod:     number
+    orgcty:     number
+    orgnam:     string
+    orgnamshr:  string
+    orgadr:     string
+    orgtel:     string
+    orgdmu:     string
 }

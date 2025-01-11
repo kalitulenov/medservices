@@ -28,7 +28,7 @@ model sprusr {
   id     Int    @id @default(autoincrement())
   usrkod Int
   usrorg String
-  usrlog String @unique
+  usrlog String 
   usrpsw String
   usrtyp String
   usrfio String

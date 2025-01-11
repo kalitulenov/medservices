@@ -29,12 +29,8 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-//import { columns } from "./columns";
 import { FooterCell } from "./FooterCell";
-//import "./table.css";
 import { deleteRow, updateRow, addRow } from "./actionsUsr";
-//import  useSprUsr  from "./actionsUsr";
-//import  useStudents  from "./actionsStd";
 import { SprUsr } from "./types";
 
   interface DataTableProps<TData, TValue> {
@@ -143,7 +139,7 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
         updateRow: (rowIndex: number) => {
           console.log("data-table-updateRow=",rowIndex,dataSpr);
 
-          updateRow(dataSpr[rowIndex].Id, dataSpr[rowIndex]);
+          updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
           setIsValidating(!isValidating);
         },
 
@@ -153,10 +149,10 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
               if (index === rowIndex) 
                 {
                     console.log("updateData-dataSpr1=",dataSpr);
-                    console.log("updateData-data=",data);
-                    console.log("updateData-originalData=",originalData);
-                    console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                    console.log("updateData-...old=",...old);
+                    // console.log("updateData-data=",data);
+                    // console.log("updateData-originalData=",originalData);
+                    // console.log("updateData-rowIndex=",rowIndex,columnId,value);
+                    // console.log("updateData-...old=",...old);
                     console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
                     return {...old[rowIndex],[columnId]: value,};
                 }
@@ -173,21 +169,21 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
         },
 
         removeRow: (rowIndex: number) => {
-          deleteRow(dataSpr[rowIndex].Id);
+          deleteRow(dataSpr[rowIndex].id);
           setIsValidating(!isValidating);
         },
   
         addRow: () => {
           const id = Math.floor(Math.random() * 10000);
           const newRow: SprUsr = {
-            Id:     id,
-            UsrKod: 0,
-            UsrOrg: "",
-            UsrLog: "",
-            UsrPsw: "",
-            UsrTyp: "",
-            UsrFio: "",
-            UsrTel: ""
+            id:     id,
+            usrkod: id,
+            usrorg: "",
+            usrlog: "12345",
+            usrpsw: "",
+            usrtyp: "",
+            usrfio: "",
+            usrtel: ""
           };
           addRow(newRow);
         },
@@ -203,9 +199,9 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
                 <Input placeholder="Filter hosp name"
-                      value={table.getColumn("UsrFio")?.getFilterValue() as string || ""} 
+                      value={table.getColumn("usrfio")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
-                          table.getColumn("UsrFio")?.setFilterValue(e.target.value);
+                          table.getColumn("usrfio")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />

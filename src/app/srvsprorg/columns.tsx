@@ -85,7 +85,13 @@ export const columns: ColumnDef<SprOrg>[] = [
         accessorKey: "orgdmu",
         cell: TableCell,
         meta: {
-          type: 'text',
+          type: 'select',
+          options: [
+            { value: '', label: 'Select' },
+            { value: 'да', label: 'да' },
+            { value: 'нет', label: 'нет' },
+          ],
+          required: true,
         },
     },
     {

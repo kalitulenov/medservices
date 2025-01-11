@@ -21,8 +21,9 @@ type Option = {
  
     useEffect(() => {setValue(initialValue)}, [initialValue])
 
-    const onBlur = () => {
+    const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
       // console.log("TableCell-rowIndex=",row.index, column.id, value);
+      displayValidationMessage(e);
       tableMeta?.updateData(row.index, column.id, value)
     }
 
@@ -33,6 +34,7 @@ type Option = {
       console.log("TableCell-onSelectChange=",row.index, column.id, e.target.value, e.target.validity.valid);
       tableMeta?.updateData(row.index, column.id, e.target.value, e.target.validity.valid);
     };
+    
 
     const displayValidationMessage = <T extends HTMLInputElement | HTMLSelectElement>(e: ChangeEvent<T>) =>{
       if (columnMeta?.validate) {
@@ -63,19 +65,17 @@ type Option = {
     if (tableMeta?.editedRows[row.id]) {
       return columnMeta?.type === "select" ? (
         <select
-          onChange={onSelectChange}
-          value={initialValue}
-          required={columnMeta?.required}
-          title={validationMessage}
-        >
-          {columnMeta?.options?.map((option: Option) => 
-            (<option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          )
-          
-          )}
-        </select>
+        onChange={onSelectChange}
+        value={initialValue}
+        required={columnMeta?.required}
+        title={validationMessage}
+      >
+        {columnMeta?.options?.map((option: Option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       ) : (
         <input
           value={value}

@@ -23,13 +23,14 @@ export async function updateRow(id: number, postData: SprUsr) {
     await db.sprusr.update
     (
         {
-         where: {Id:id},
-         data: {UsrOrg: postData.UsrOrg,
-                UsrLog: postData.UsrLog,
-                UsrPsw: postData.UsrPsw,
-                UsrTel: postData.UsrTel,
-                UsrFio: postData.UsrFio,
-                UsrTyp: postData.UsrTyp}
+         where: {id:id},
+         data: {usrkod: Number(postData.usrkod),
+                usrorg: postData.usrorg,
+                usrlog: postData.usrlog,
+                usrpsw: postData.usrpsw,
+                usrtel: postData.usrtel,
+                usrfio: postData.usrfio,
+                usrtyp: postData.usrtyp}
          } 
     );
  }
@@ -39,7 +40,7 @@ export async function deleteRow(id: number) {
     console.log("removeRow=",id);
     await db.sprusr.delete
     (
-        {where: {Id:id}} 
+        {where: {id:id}} 
     );
  }
 
@@ -50,26 +51,13 @@ export async function addRow(postData: SprUsr) {
     await db.sprusr.create
     (
         {
-         data: {Id:     postData.Id as number,
-                UsrKod: postData.UsrKod as number,
-                UsrOrg: postData.UsrOrg as string,
-                UsrLog: postData.UsrLog as string,
-                UsrPsw: postData.UsrPsw as string,
-                UsrTyp: postData.UsrTyp as string,
-                UsrTel: postData.UsrTel as string,
-                UsrFio: postData.UsrFio as string}
+         data: {usrkod: postData.usrkod as number,
+                usrorg: postData.usrorg as string,
+                usrlog: postData.usrlog as string,
+                usrpsw: postData.usrpsw as string,
+                usrtel: postData.usrtel as string,
+                usrfio: postData.usrfio as string,
+                usrtyp: postData.usrtyp as string}
          } 
     );
  }
-
-
-
-
-  //   return {
-  //     data: data ?? [],
-  // //    isValidating,
-  //     addRow,
-  //     updateRow,
-  //     deleteRow
-  //   };
-  
