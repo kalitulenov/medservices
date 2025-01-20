@@ -30,23 +30,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { FooterCell } from "./FooterCell";
-import { deleteRow, updateRow, addRow } from "./actionsUsr";
+//import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprUsr } from "./types";
+import useUsers from "./actionsUsr";
+import { columns } from "./columns";
+
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprUsr, TValue>[];
     data: SprUsr[];
   }
 
-export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
+//export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
    
-//export const SprTable  = () => { 
+export const SprTable  = () => { 
  
   //const {updateRow, addRow, deleteRow} =  useSprUsr(); 
+  const { data: originalData , isValidating,deleteRow, updateRow, addRow} = useUsers();
+
+
+  const [data, setData] = useState<SprUsr[]>([]);
   
-  //const [data, setData] = useState<SprUsr[]>([]);
-  const [dataSpr, setDataSpr] = useState(() => [...data]);
-  const [originalData, setOriginalData] = useState(() => [...data]);
+  //console.log("data-table-data0=",data);
+  //const [dataSpr, setDataSpr] = useState(() => [...data]);
+  //const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
@@ -61,7 +68,8 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = React.useState({});
 
-  const [isValidating, setIsValidating] = React.useState(true);
+  //const [isValidating, setIsValidating] = React.useState(true);
+  //const isValidating = true;
 
   const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index
@@ -69,15 +77,15 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
     });
   
   useEffect(() => {
-      console.log("useEffect=",isValidating);
+   //   console.log("useEffect=",isValidating);
   //   if (isValidating) return; 
-      setDataSpr([...originalData]);
-      data = [...originalData]
+      setData([...originalData]);
+   //   data = [...originalData]
   }, [isValidating]);
 
-  console.log("data-table-data=",data);
-  console.log("data-table-dataSpr=",dataSpr);
-  console.log("data-table-originalData=",originalData);
+  
+  // console.log("data-table-dataSpr0=",data);
+  // console.log("data-table-originalData=",originalData);
 
   const table = useReactTable({
     data,
@@ -103,17 +111,18 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
     meta: {
         editedRows,
         setEditedRows,
-
+        validRows,
+        setValidRows,
+  
         // ---------------------------------------------------------
         revertData: (rowIndex: number) => {
-            console.log("revertData-originalData=",originalData);
+        //    console.log("revertData-originalData=",originalData);
             // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
             // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
             // console.log("revertData-dataSpr2=",dataSpr);
-              console.log("revertData-dataSpr1=",dataSpr);
-              setIsValidating(!isValidating);
+            //  console.log("revertData-dataSpr1=",data);
 
-              setDataSpr((old) => old.map((row, index) => 
+              setData((old) => old.map((row, index) => 
                 {
                   if (index === rowIndex) {return {...originalData[rowIndex]}}
                   else {return row} 
@@ -121,65 +130,46 @@ export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TV
               )
           },
 
-        // ---------------------------------------------------------
-        // updateData: (rowIndex: number) => {
-        //   console.log("updateData-originalData=",originalData);
-        //   // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //   // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-        //   // console.log("revertData-dataSpr2=",dataSpr);
-        //     console.log("updateData-dataSpr1=",dataSpr);
-        //     setOriginalData((old) => old.map((row, index) => 
-        //       {
-        //         if (index === rowIndex) {return {...dataSpr[rowIndex]}}
-        //         else {return row} 
-        //       })
-        //     )
-        // },
-
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,dataSpr);
+          console.log("data-table-updateRow=",rowIndex,data);
 
-          updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
-          setIsValidating(!isValidating);
+          updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
-        updateData: (rowIndex: number, columnId: string, value: string) => {
-          setDataSpr((old) =>old.map((row, index) => 
-            {
-              if (index === rowIndex) 
+        updateData: (rowIndex: number, columnId: string, value: string) => 
+          {
+            console.log("updateData-begin=");
+              setData((old) =>old.map((row, index) => 
                 {
-                    console.log("updateData-dataSpr1=",dataSpr);
-                    // console.log("updateData-data=",data);
-                    // console.log("updateData-originalData=",originalData);
-                    // console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                    // console.log("updateData-...old=",...old);
-                    console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
-                    return {...old[rowIndex],[columnId]: value,};
-                }
-              return row;
-            })
-          );
-   //       setIsValidating(!isValidating);
-   //       data=[...dataSpr];
-          console.log("updateData-dataSpr2=",dataSpr);
-          console.log("updateData-data2=",data);
-          console.log("updateData-originalData2=",originalData);
-
-
+               //   console.log("updateData-old=",old);
+                  if (index === rowIndex) 
+                    {
+                       // console.log("updateData-dataSpr1=",data);
+                        // console.log("updateData-data=",data);
+                        // console.log("updateData-originalData=",originalData);
+                        // console.log("updateData-rowIndex=",rowIndex,columnId,value);
+                        // console.log("updateData-...old=",...old);
+                      //  console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
+                        return {...old[rowIndex],[columnId]: value,};
+                    }
+                    return row;
+                })
+              );
+            //  console.log("updateData-dataSpr2=",data);
         },
 
         removeRow: (rowIndex: number) => {
-          deleteRow(dataSpr[rowIndex].id);
-          setIsValidating(!isValidating);
+          console.log("removeRow-rowIndex=",rowIndex);
+          deleteRow(data[rowIndex].id);
         },
   
         addRow: () => {
           const id = Math.floor(Math.random() * 10000);
           const newRow: SprUsr = {
-            id:     id,
+         //   id:     id,
             usrkod: id,
             usrorg: "",
-            usrlog: "12345",
+            usrlog: "",
             usrpsw: "",
             usrtyp: "",
             usrfio: "",

@@ -26,8 +26,8 @@ export default async function SprUsrPage() {
 
   return (
     <div className='container py-5 px-20 mx-auto'>
-     <SprTable columns={columns} data={defaultData} />
-       {/* <SprTable /> */}
+     {/* //<SprTable columns={columns} data={defaultData} /> */}
+       <SprTable />
     </div>  
    )
 }
