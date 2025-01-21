@@ -1,17 +1,29 @@
 
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { getSession } from "@/actions";
 
 export async function GET(req: Request) {
   console.log("route_GET=");
+  // const headerList = headers();         // полчить заголовок запроса
+  // const type = headerList.get("type");  // полчить в заголовок параметр
+  const session = await getSession();
+
   try {
     const result = await db.sprusr.findMany({
       orderBy: [
+        // {
+        //   id: 'desc',
+        // },
         {
-          id: 'desc',
-        },
+          ...(session.isAdd ? { id: 'desc' } : {id: 'asc'}),
+        }
       ],
     });
+    session.isAdd = false;
+    await session.save();
+
     return NextResponse.json(result);
   } catch (err) {
     console.log(err);
@@ -22,6 +34,12 @@ export async function GET(req: Request) {
 export async function POST(req: Request) 
 {
     console.log("POST=");
+    
+    const session = await getSession();
+    session.isAdd = true;
+    await session.save();
+
+
     const body = await req.json();
     const result = await db.sprusr.create(
       {

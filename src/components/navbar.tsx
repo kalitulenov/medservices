@@ -14,27 +14,27 @@ export async function Navbar() {
   const session = await getSession();
   console.log('session_Nav=',session);
 
- const dataDB = [
-  {
-    "id": 1,
-    "href": "/",
-    "label": "Home1",
-    "isExternal": false,
-  },
-  {
-    "id": 2,
-    "href": "/about",
-    "label": "About1",
-    "isExternal": false,
-  },
+//  const dataDB = [
+//   {
+//     "id": 1,
+//     "href": "/",
+//     "label": "Home1",
+//     "isExternal": false,
+//   },
+//   {
+//     "id": 2,
+//     "href": "/about",
+//     "label": "About1",
+//     "isExternal": false,
+//   },
 
-  {
-    id: 3,
-    "href": "/blog",
-    "label": "Blog1",
-    "isExternal": false,
-  },
-];
+//   {
+//     id: 3,
+//     "href": "/blog",
+//     "label": "Blog1",
+//     "isExternal": false,
+//   },
+// ];
 
 
 //  структура меню -------------------

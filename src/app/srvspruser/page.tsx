@@ -5,19 +5,19 @@ import { columns } from './columns'
 import { db } from "@/lib/db";
 
 export default async function SprUsrPage() {
-    // загрузка меню из БД ---------------------------
-  async function loader() {
-      try {
-          const response = await db.sprusr.findMany();
-          return response;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //   // загрузка меню из БД ---------------------------
+  // async function loader() {
+  //     try {
+  //         const response = await db.sprusr.findMany();
+  //         return response;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   
   // загрузка меню из БД ---------------------------
-  console.log("SprUsrPage")
-  const defaultData: any = await loader();
+  // console.log("SprUsrPage")
+  // const defaultData: any = await loader();
   // если пусто ---------------------------
   //if (!defaultData) return <h1>no datafound</h1>
   
@@ -31,5 +31,3 @@ export default async function SprUsrPage() {
     </div>  
    )
 }
-
-//export default SprOrgPage;

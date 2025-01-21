@@ -1,14 +1,13 @@
 
-import { db } from "@/lib/db";
 import { SprUsr } from "./types";
 import useSWR, { mutate } from 'swr';
 const url = './api/users';
 
 // ==============================================================================================
   async function getRequest() {
-    console.log("getRequest=",url);
-    const response = await fetch(url);
-    return response.json();
+   // console.log("getRequest=",url);
+      const response = await fetch(url);
+      return response.json();
   }
 
 //--------------------------------------------------------------
@@ -23,24 +22,6 @@ async function updateRequest(id: number, data: SprUsr) {
   return response.json();
 }
 
-
-// async function updateRequest(id: number, postData: SprUsr) {
-//     console.log("updateRow=",id,postData);
-//     await db.sprusr.update
-//     (
-//         {
-//          where: {id:id},
-//          data: {usrkod: Number(postData.usrkod),
-//                 usrorg: postData.usrorg,
-//                 usrlog: postData.usrlog,
-//                 usrpsw: postData.usrpsw,
-//                 usrtel: postData.usrtel,
-//                 usrfio: postData.usrfio,
-//                 usrtyp: postData.usrtyp}
-//          } 
-//     );
-//  };
- 
  //--------------------------------------------------------------
 async function deleteRequest(id: number) {
     console.log("removeRow=",id);
@@ -57,6 +38,7 @@ async function deleteRequest(id: number) {
 //--------------------------------------------------------------
 
  async function addRequest(data: SprUsr) {
+
   const response = await fetch(url, {
     method: 'POST',
     headers: {

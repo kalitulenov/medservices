@@ -25,7 +25,7 @@ type Option = {
       setValue(initialValue)}, [initialValue])
 
     const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-      console.log("TableCell-onBlur=",row.index, column.id, value);
+   //   console.log("TableCell-onBlur=",row.index, column.id, value);
     //  displayValidationMessage(e);
       tableMeta?.updateData(row.index, column.id, value)
     }
@@ -34,25 +34,25 @@ type Option = {
     const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
      // displayValidationMessage(e);
       setValue(e.target.value);
-      console.log("TableCell-setValue=",value);
-      console.log("TableCell-onSelectChange=",row.index, column.id, e.target.value, e.target.validity.valid);
+      // console.log("TableCell-setValue=",value);
+      // console.log("TableCell-onSelectChange=",row.index, column.id, e.target.value, e.target.validity.valid);
       tableMeta?.updateData(row.index, column.id, e.target.value, e.target.validity.valid);
     };
     
 
-    const displayValidationMessage = <T extends HTMLInputElement | HTMLSelectElement>(e: ChangeEvent<T>) =>{
-      if (columnMeta?.validate) {
-        const isValid = columnMeta.validate(e.target.value);
-        if (isValid) {
-          e.target.setCustomValidity("");
-          setValidationMessage("");
-        } else {
-          e.target.setCustomValidity(columnMeta.validationMessage);
-          setValidationMessage(columnMeta.validationMessage);
-        }
-      } else if (e.target.validity.valid) {setValidationMessage("");} 
-             else {setValidationMessage(e.target.validationMessage);}
-    };
+    // const displayValidationMessage = <T extends HTMLInputElement | HTMLSelectElement>(e: ChangeEvent<T>) =>{
+    //   if (columnMeta?.validate) {
+    //     const isValid = columnMeta.validate(e.target.value);
+    //     if (isValid) {
+    //       e.target.setCustomValidity("");
+    //       setValidationMessage("");
+    //     } else {
+    //       e.target.setCustomValidity(columnMeta.validationMessage);
+    //       setValidationMessage(columnMeta.validationMessage);
+    //     }
+    //   } else if (e.target.validity.valid) {setValidationMessage("");} 
+    //          else {setValidationMessage(e.target.validationMessage);}
+    // };
   
     if (tableMeta?.editedRows[row.id]) {
       return columnMeta?.type === "select" ? (

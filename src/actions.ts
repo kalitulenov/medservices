@@ -15,7 +15,7 @@ export const getSession = async () => {
   // используя iron-session применяя ключ из sessionOptions расшифруем cookies
   // и из него получить данные сеанса , а из саенса получить данные пользователя
   const session = await getIronSession<SessionData>(cookies(), sessionOptions);
-  console.log("Act_session=", session);
+  //console.log("Act_session=", session);
 
   if (!session.isLoggedIn) {
     session.isLoggedIn = dafaultSession.isLoggedIn; // меняем false на true и наоборот
@@ -44,7 +44,7 @@ export async function login(
   const session = await getSession();
   //console.log("Act_Login_session=", session);
 
-  console.log("Act_Login_formData=", formData);
+  //console.log("Act_Login_formData=", formData);
   
   const formDataObj = {
     formUsername: formData.get("usrlog") as string,
@@ -52,9 +52,9 @@ export async function login(
     formUserId: formData.get("id") as string,
   }
 
-  console.log("Act_Login_formUsername=", formDataObj.formUsername);
-  console.log("Act_Login_formPassword=", formDataObj.formPassword);
-  console.log("Act_Login_formUserId=", formDataObj.formUserId);
+  // console.log("Act_Login_formUsername=", formDataObj.formUsername);
+  // console.log("Act_Login_formPassword=", formDataObj.formPassword);
+  // console.log("Act_Login_formUserId=", formDataObj.formUserId);
 
   // схема проверки формы
   const FormSchema = z.object({
@@ -66,7 +66,7 @@ export async function login(
 
   const validatedFields = FormSchema.safeParse(formDataObj);
   
-  console.log("Act_Login_validatedFields=", validatedFields);
+ // console.log("Act_Login_validatedFields=", validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -111,7 +111,7 @@ export async function login(
 
     if (!userArr || !userArr.length)  return { ...prevState, message: "нет организаций" };
 
-    console.log("Act_Login_userArr=", userArr);
+  //  console.log("Act_Login_userArr=", userArr);
    // console.log("Act_Login_user2=", formDataObj.formUsername,user?.usrlog);
     const user = userArr[0];
     // если имя пользователя из формы не совпадает с именем из БД , то ошибка
@@ -131,10 +131,13 @@ export async function login(
     session.username = formDataObj.formUsername;
     session.usertype = user?.usrtyp;
     session.isLoggedIn = true;
+    session.isOpen = true;
+    session.isBlocked = false;
+    session.isAdd = false;
 
     // сохраняем сеанс
     await session.save();
-    console.log("Act_Login_session2=", session);
+   // console.log("Act_Login_session2=", session);
 
     // перенаправить
     redirect("/");

@@ -29,7 +29,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { FooterCell } from "./FooterCell";
+import { FooterCell } from "@/components/FooterCell";
 //import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprUsr } from "./types";
 import useUsers from "./actionsUsr";
@@ -166,7 +166,7 @@ export const SprTable  = () => {
         addRow: () => {
           const id = Math.floor(Math.random() * 10000);
           const newRow: SprUsr = {
-         //   id:     id,
+            id:     id,
             usrkod: id,
             usrorg: "",
             usrlog: "",
