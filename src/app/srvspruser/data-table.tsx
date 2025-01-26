@@ -34,6 +34,7 @@ import { FooterCell } from "@/components/FooterCell";
 import { SprUsr } from "./types";
 import useUsers from "./actionsUsr";
 import { columns } from "./columns";
+//import { any } from "zod";
 
 
   interface DataTableProps<TData, TValue> {
@@ -46,11 +47,11 @@ import { columns } from "./columns";
 export const SprTable  = () => { 
  
   //const {updateRow, addRow, deleteRow} =  useSprUsr(); 
-  const { data: originalData , isValidating,deleteRow, updateRow, addRow} = useUsers();
-
+  const { data: originalData , isValidating, deleteRow, updateRow, addRow} = useUsers();
 
   const [data, setData] = useState<SprUsr[]>([]);
-  
+  //console.log("useEffect0=",isValidating);
+
   //console.log("data-table-data0=",data);
   //const [dataSpr, setDataSpr] = useState(() => [...data]);
   //const [originalData, setOriginalData] = useState(() => [...data]);
@@ -71,21 +72,16 @@ export const SprTable  = () => {
   //const [isValidating, setIsValidating] = React.useState(true);
   //const isValidating = true;
 
-  const [pagination, setPagination] = useState({
-    pageIndex: 0, //initial page index
-    pageSize: 5, //default page size
+    const [pagination, setPagination] = useState({
+    pageIndex: 0, //не работает
+    pageSize: 6,  //работает
     });
-  
+
   useEffect(() => {
-   //   console.log("useEffect=",isValidating);
-  //   if (isValidating) return; 
-      setData([...originalData]);
-   //   data = [...originalData]
+     if (isValidating) return; 
+        setData([...originalData]);
   }, [isValidating]);
 
-  
-  // console.log("data-table-dataSpr0=",data);
-  // console.log("data-table-originalData=",originalData);
 
   const table = useReactTable({
     data,
@@ -94,19 +90,25 @@ export const SprTable  = () => {
     getPaginationRowModel: getPaginationRowModel(),   // для листания
     getSortedRowModel: getSortedRowModel(),           // для сортировки
     getFilteredRowModel: getFilteredRowModel(),       // для фильтраций
-    onPaginationChange: setPagination, //update the pagination state when internal APIs mutate the pagination state
-
+    onPaginationChange: setPagination, // update the pagination state when internal APIs mutate the pagination state
+    initialState: {
+      pagination: {
+        pageIndex: 0, // работает
+        pageSize: 4, // не работает
+      },
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setrowSelection,
+   // manualPagination: true,               // new
       
     state: {
       sorting, 
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination,
+      pagination,     //   new
     },
     meta: {
         editedRows,
@@ -116,12 +118,6 @@ export const SprTable  = () => {
   
         // ---------------------------------------------------------
         revertData: (rowIndex: number) => {
-        //    console.log("revertData-originalData=",originalData);
-            // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-            // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-            // console.log("revertData-dataSpr2=",dataSpr);
-            //  console.log("revertData-dataSpr1=",data);
-
               setData((old) => old.map((row, index) => 
                 {
                   if (index === rowIndex) {return {...originalData[rowIndex]}}
@@ -136,26 +132,20 @@ export const SprTable  = () => {
           updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
-        updateData: (rowIndex: number, columnId: string, value: string) => 
+        updateData: (rowIndex: number, columnId: string, value: string) =>
           {
-            console.log("updateData-begin=");
+              console.log("updateData-begin=");
+       
               setData((old) =>old.map((row, index) => 
                 {
                //   console.log("updateData-old=",old);
                   if (index === rowIndex) 
                     {
-                       // console.log("updateData-dataSpr1=",data);
-                        // console.log("updateData-data=",data);
-                        // console.log("updateData-originalData=",originalData);
-                        // console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                        // console.log("updateData-...old=",...old);
-                      //  console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
                         return {...old[rowIndex],[columnId]: value,};
                     }
                     return row;
                 })
               );
-            //  console.log("updateData-dataSpr2=",data);
         },
 
         removeRow: (rowIndex: number) => {
@@ -172,7 +162,7 @@ export const SprTable  = () => {
             usrlog: "",
             usrpsw: "",
             usrtyp: "",
-            usrfio: "",
+            usrfio: "Новый пользователь",
             usrtel: ""
           };
           addRow(newRow);
@@ -181,6 +171,10 @@ export const SprTable  = () => {
       },
     });
 
+  // console.log("Текущая2=",table.getState().pagination.pageIndex);
+  // console.log("Начальная2=",table.initialState.pagination.pageIndex);
+
+  table.initialState.pagination.pageIndex=table.getState().pagination.pageIndex;
 
   return (
     <div className="w-full">
@@ -198,6 +192,8 @@ export const SprTable  = () => {
             </div>
 
             {/* для выпадающей меню className="ml-auto" сдвиг налево до упора*/}
+            {/* вызывал ошибку во время рендеринга
+            
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button variant="outline" className="ml-auto">
@@ -219,7 +215,9 @@ export const SprTable  = () => {
                   )
                 })}
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> 
+            
+            */}
         </div>
 
       {/* таблица */}

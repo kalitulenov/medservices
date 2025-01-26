@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   const session = await getSession();
 
   try {
-    const result = await db.sprusr.findMany({
+    const result = await db.sprorg.findMany({
       orderBy: [
         {
           ...(session.isAdd ? { id: 'desc' } : {id: 'asc'}),
@@ -38,7 +38,7 @@ export async function POST(req: Request)
 
 
     const body = await req.json();
-    const result = await db.sprusr.create(
+    const result = await db.sprorg.create(
       {
         data: {...body,},
       }
@@ -57,9 +57,4 @@ export async function POST(req: Request)
         });
 
 }
-
-
-
-
-
 

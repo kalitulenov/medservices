@@ -7,10 +7,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { EditCell } from "./EditCell";
 import { SprOrg } from './types';
 
-import { TableCell } from "./TableCell";
+import { EditCell } from "@/components/EditCell";
+import { TableCell } from "@/components/TableCell";
 
 import { useEffect, useState } from "react";
 

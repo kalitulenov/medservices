@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { EditCell } from "@/components/EditCell";
 import { SprUsr } from './types';
 
-import { TableCell } from "../../components/TableCell";
+import { TableCell } from "@/components/TableCell";
 
 import { useEffect, useState } from "react";
 

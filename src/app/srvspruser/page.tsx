@@ -1,8 +1,8 @@
 
 import React from 'react'
 import { SprTable } from './data-table'
-import { columns } from './columns'
-import { db } from "@/lib/db";
+// import { columns } from './columns'
+// import { db } from "@/lib/db";
 
 export default async function SprUsrPage() {
   //   // загрузка меню из БД ---------------------------

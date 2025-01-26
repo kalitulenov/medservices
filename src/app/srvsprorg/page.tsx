@@ -9,18 +9,18 @@ import { db } from "@/lib/db";
 
 export default async function SprOrgPage() {
     // загрузка меню из БД ---------------------------
-  async function loader() {
-      try {
-          const response = await db.sprorg.findMany();
-          return response;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // async function loader() {
+  //     try {
+  //         const response = await db.sprorg.findMany();
+  //         return response;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   
   // загрузка меню из БД ---------------------------
   console.log("SprOrgPage")
-  const defaultData: any = await loader();
+  //const defaultData: any = await loader();
   // если пусто ---------------------------
   //if (!defaultData) return <h1>no datafound</h1>
   
@@ -29,8 +29,8 @@ export default async function SprOrgPage() {
 
   return (
     <div className='container py-5 px-20 mx-auto'>
-     <SprTable columns={columns} data={defaultData} />
-       {/* <SprTable /> */}
+     {/* <SprTable columns={columns} data={defaultData} /> */}
+       <SprTable />
     </div>  
    )
 }

@@ -3,6 +3,7 @@
 
 import { useState, useEffect, ChangeEvent } from "react";
 import "./table.css";
+import { Checkbox } from "./ui/checkbox";
 
 type Option = {
     label: string;
@@ -16,8 +17,7 @@ type Option = {
     const [value, setValue] = useState(initialValue)
     const [validationMessage, setValidationMessage] = useState("");
 
-  //  console.log("TableCell-tableMeta=",table);
- //   console.log("TableCell-columnMeta=",columnMeta);
+ //   console.log("TableCell-tableMeta=",tableMeta);
  //   console.log("TableCell-initialValue=",initialValue);
 
     useEffect(() => {
@@ -25,12 +25,11 @@ type Option = {
       setValue(initialValue)}, [initialValue])
 
     const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-   //   console.log("TableCell-onBlur=",row.index, column.id, value);
+      console.log("TableCell-onBlur=",row.index, column.id, value);
     //  displayValidationMessage(e);
-      tableMeta?.updateData(row.index, column.id, value)
+       tableMeta?.updateData(row.index, column.id, value)
     }
 
-      
     const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
      // displayValidationMessage(e);
       setValue(e.target.value);
@@ -53,33 +52,85 @@ type Option = {
     //   } else if (e.target.validity.valid) {setValidationMessage("");} 
     //          else {setValidationMessage(e.target.validationMessage);}
     // };
-  
-    if (tableMeta?.editedRows[row.id]) {
-      return columnMeta?.type === "select" ? (
-        <select
-            onChange={onSelectChange}
-            value={initialValue}
-            required={columnMeta?.required}
-            title={validationMessage}
-      >
-        {columnMeta?.options?.map((option: Option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      ) : (
-        <input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onBlur={onBlur}
-          type={columnMeta?.type || "text"}
+    // console.log("TableCell-columnMeta?.type=",columnMeta?.type);
+    // console.log("TableCell-tableMeta?.editedRows[row.id]=",tableMeta?.editedRows[row.id]);
+    // if (columnMeta?.type === "boolean")
+    //   {
+    //        return ( <Checkbox  checked={row.original.uslfrmflg}
+    //                  onCheckedChange={(value) => {row.toggleSelected(!!value);}}
+    //                 />)}
+
+
+  if (tableMeta?.editedRows[row.id]) {
+    return columnMeta?.type === "select" ? (
+      <select
+          onChange={onSelectChange}
+          value={initialValue}
           required={columnMeta?.required}
-          pattern={columnMeta?.pattern}
           title={validationMessage}
-        />
-      );
-    }
-  
-    return <span>{value}</span>
+    >
+      {columnMeta?.options?.map((option: Option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    ) : (
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={onBlur}
+        type={columnMeta?.type || "text"}
+        required={columnMeta?.required}
+        pattern={columnMeta?.pattern}
+        title={validationMessage}
+      />
+    );
   }
+
+  }
+
+  // if (tableMeta?.editedRows[row.id]) {
+  //   console.log("TableCell-columnMeta?.type");
+  //   if (columnMeta?.type === "select")
+  //   {
+  //     return  (<select
+  //                 onChange={onSelectChange}
+  //                 value={initialValue}
+  //                 required={columnMeta?.required}
+  //                 title={validationMessage}
+  //           >
+  //             {columnMeta?.options?.map((option: Option) => (
+  //               <option key={option.value} value={option.value}>
+  //                 {option.label}
+  //               </option>
+  //             ))}
+  //           </select>) }
+  //   else
+  //      if (columnMeta?.type === "text") {
+  //         return (<input
+  //                     value={value}
+  //                     onChange={(e) => setValue(e.target.value)}
+  //                     onBlur={onBlur}
+  //                     type={columnMeta?.type || "text"}
+  //                     required={columnMeta?.required}
+  //                     pattern={columnMeta?.pattern}
+  //                     title={validationMessage}
+  //                   />
+  //                 );}
+  //      else 
+  //        if (columnMeta?.type === "boolean")
+  //        {
+  //         return (<input
+  //                 value={value}
+  //                 onChange={(e) => setValue(e.target.value)}
+  //                 onBlur={onBlur}
+  //                 type={"checkbox"}
+  //                 required={columnMeta?.required}
+  //                 pattern={columnMeta?.pattern}
+  //                 title={validationMessage}
+  //         />
+  //       );}
+
+  //            //  return (<Checkbox checked={initialValue} />)
+  // }

@@ -5,9 +5,8 @@ export const EditCell = ({ row, table }) => {
     const meta = table.options.meta
     const setEditedRows = (e: MouseEvent<HTMLButtonElement>) => {
       const elName = e.currentTarget.name
-      meta?.setEditedRows((old: []) => ({...old,[row.id]: !old[row.id],}))
 
-     // console.log("EditCell-elName=",elName);
+      meta?.setEditedRows((old: []) => ({...old,[row.id]: !old[row.id],}))
 
       // отмена изменения
       if (elName === "cancel") {meta?.revertData(row.index)}

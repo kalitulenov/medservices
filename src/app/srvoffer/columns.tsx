@@ -5,11 +5,11 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+//import { Checkbox } from "@/components/ui/checkbox";
 import { SprUslFrm } from './types';
-
-import { TableCell } from "./TableCell";
-import { EditCell } from "./EditCell";
+import { EditCell } from "@/components/EditCell";
+import { TableCell } from "@/components/TableCell";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: ColumnDef<SprUslFrm>[] = [
     {
@@ -27,11 +27,6 @@ export const columns: ColumnDef<SprUslFrm>[] = [
         },
         accessorKey: "usltrf"
     },
-
-    // {
-    //     header: "Тарификатор",  
-    //     accessorKey: "UslTrf"
-    // },
     {
       header: "КодКлиники",  
       accessorKey: "uslfrmhsp",
@@ -51,18 +46,38 @@ export const columns: ColumnDef<SprUslFrm>[] = [
         accessorKey: "usledn"
     },
     {
-      header: "*",
+      header: "Выбор",
       accessorKey: "uslfrmflg",
-      cell: TableCell,
+      // cell: ({ row }) => {
+      //   return (
+      //     <Checkbox
+      //       checked={row.getIsSelected()}
+      //       onCheckedChange={(value) => {
+      //         row.toggleSelected(!!value);
+      //       }}
+      //     />
+      //   );
+      // },
+  
+      //cell: TableCell,
       // cell: ({row}) => {
-      //   const offer = row.original;
-      //   var offerflg = offer.uslfrmflg;
-      //   return <Checkbox checked={offerflg}
-      //   onCheckedChange={()=>{
-      //     offerflg=!offerflg;
-      //     console.log("TableCell-onCheckedChange=",offerflg);
-      //   }}
+      //   return <Checkbox checked={row.original.uslfrmflg}
+      //   onCheckedChange={()=>{row.original.uslfrmflg=!row.original.uslfrmflg;
+      //     console.log("TableCell-onCheckedChange=",row.original.uslfrmflg); 
+      //     }}
       //   />},
+      cell: ({ row }) => {
+        return (
+          <Checkbox
+            checked={row.original.uslfrmflg}
+            onCheckedChange={() => {row.original.uslfrmflg=!row.original.uslfrmflg;
+              console.log("TableCell-onCheckedChange=",row.original.uslfrmflg);}
+      //     }}
+            }
+          />
+        );
+      },
+  
 
       meta: {type: 'boolean',},
     },
@@ -70,22 +85,18 @@ export const columns: ColumnDef<SprUslFrm>[] = [
       header: "Min_Возраст",  
       accessorKey: "uslminlet",
       cell: TableCell,
-      meta: {type: 'number',},
+      meta: {type: 'text',},
     },
     {
       header: "Max_Возраст",  
       accessorKey: "uslmaxlet",
       cell: TableCell,
-      meta: {type: 'number',},
+      meta: {type: 'text',},
     },
     {
-      header: "Edit",  
-      //cell: ({ row, table }) => EditCell({ row, table })
+      header: "Edit", 
       cell: EditCell,
     }
-
-
-
 ]
 
 

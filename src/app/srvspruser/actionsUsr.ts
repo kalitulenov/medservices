@@ -5,7 +5,7 @@ const url = './api/users';
 
 // ==============================================================================================
   async function getRequest() {
-   // console.log("getRequest=",url);
+    console.log("getRequest=",url);
       const response = await fetch(url);
       return response.json();
   }
@@ -50,8 +50,8 @@ async function deleteRequest(id: number) {
 }
  
  export default function useUsers() {
-  //console.log("useUsers-data=");
    const { data, isValidating } = useSWR(url,getRequest);
+   //console.log("useStudents_isValidating=",isValidating);
 
     const updateRow = async (id: number, postData: SprUsr) => {
       await updateRequest(id, postData);

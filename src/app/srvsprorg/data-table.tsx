@@ -1,4 +1,6 @@
 
+
+
 "use client"
 
 import {
@@ -29,21 +31,28 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-//import { columns } from "./columns";
-import { FooterCell } from "./FooterCell";
-//import "./table.css";
-import { deleteRow, updateRow, addRow } from "./actionsOrg";
+import { FooterCell } from "@/components/FooterCell";
+//import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprOrg } from "./types";
+import useOrgs from "./actionsOrg";
+import { columns } from "./columns";
+//import { any } from "zod";
+
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprOrg, TValue>[];
     data: SprOrg[];
   }
 
-export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
+//export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
+   
+export const SprTable  = () => { 
  
-  const [dataSpr, setDataSpr] = useState(() => [...data]);
-  const [originalData, setOriginalData] = useState(() => [...data]);
+  //const {updateRow, addRow, deleteRow} =  useSprOrg(); 
+  const { data: originalData , isValidating, deleteRow, updateRow, addRow} = useOrgs();
+
+  const [data, setData] = useState<SprOrg[]>([]);
+
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
@@ -53,28 +62,20 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   // для отмеченных строк
   const [rowSelection,setrowSelection] = useState({})
 
-  //const [datainp, setDatainp] = useState(() => [...data]); // для обновления
   // ------------------------------------------------------
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = React.useState({});
 
-  const [isValidating, setIsValidating] = React.useState(true);
-
-  const [pagination, setPagination] = useState({
-    pageIndex: 0, //initial page index
-    pageSize: 5, //default page size
+    const [pagination, setPagination] = useState({
+    pageIndex: 0, //не работает
+    pageSize: 6,  //работает
     });
-  
+
   useEffect(() => {
-      console.log("useEffect=",isValidating);
-  //   if (isValidating) return; 
-      setDataSpr([...originalData]);
-      data = [...originalData]
+     if (isValidating) return; 
+        setData([...originalData]);
   }, [isValidating]);
 
-  console.log("data-table-data=",data);
-  console.log("data-table-dataSpr=",dataSpr);
-  console.log("data-table-originalData=",originalData);
 
   const table = useReactTable({
     data,
@@ -83,34 +84,35 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     getPaginationRowModel: getPaginationRowModel(),   // для листания
     getSortedRowModel: getSortedRowModel(),           // для сортировки
     getFilteredRowModel: getFilteredRowModel(),       // для фильтраций
-    onPaginationChange: setPagination, //update the pagination state when internal APIs mutate the pagination state
-
+    onPaginationChange: setPagination, // update the pagination state when internal APIs mutate the pagination state
+    initialState: {
+      pagination: {
+        pageIndex: 0, // работает
+        pageSize: 4, // не работает
+      },
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setrowSelection,
+   // manualPagination: true,               // new
       
     state: {
       sorting, 
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination,
+      pagination,     //   new
     },
     meta: {
         editedRows,
         setEditedRows,
-
+        validRows,
+        setValidRows,
+  
         // ---------------------------------------------------------
         revertData: (rowIndex: number) => {
-            console.log("revertData-originalData=",originalData);
-            // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-            // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-            // console.log("revertData-dataSpr2=",dataSpr);
-              console.log("revertData-dataSpr1=",dataSpr);
-              setIsValidating(!isValidating);
-
-              setDataSpr((old) => old.map((row, index) => 
+              setData((old) => old.map((row, index) => 
                 {
                   if (index === rowIndex) {return {...originalData[rowIndex]}}
                   else {return row} 
@@ -119,31 +121,33 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
           },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,dataSpr);
+          console.log("data-table-updateRow=",rowIndex,data);
 
-          updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
-          setIsValidating(!isValidating);
+          updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
-        updateData: (rowIndex: number, columnId: string, value: string) => {
-          setDataSpr((old) =>old.map((row, index) => 
-            {
-              if (index === rowIndex) {
-                console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                console.log("updateData-return=",...old);
-                return {...old[rowIndex],[columnId]: value,};}
-              return row;
-            })
-          );
+        updateData: (rowIndex: number, columnId: string, value: string) =>
+          {
+              console.log("updateData-begin=");
+       
+              setData((old) =>old.map((row, index) => 
+                {
+               //   console.log("updateData-old=",old);
+                  if (index === rowIndex) 
+                    {
+                        return {...old[rowIndex],[columnId]: value,};
+                    }
+                    return row;
+                })
+              );
         },
 
         removeRow: (rowIndex: number) => {
-          deleteRow(dataSpr[rowIndex].id);
-          setIsValidating(!isValidating);
+          console.log("removeRow-rowIndex=",rowIndex);
+          deleteRow(data[rowIndex].id);
         },
   
         addRow: () => {
-          console.log("addRow=");
           const id = Math.floor(Math.random() * 10000);
           const newRow: SprOrg = {
             id: id,
@@ -161,6 +165,10 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
       },
     });
 
+  // console.log("Текущая2=",table.getState().pagination.pageIndex);
+  // console.log("Начальная2=",table.initialState.pagination.pageIndex);
+
+  table.initialState.pagination.pageIndex=table.getState().pagination.pageIndex;
 
   return (
     <div className="w-full">
@@ -169,15 +177,17 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
                 <Input placeholder="Filter hosp name"
-                      value={table.getColumn("OrgNam")?.getFilterValue() as string || ""} 
+                      value={table.getColumn("orgnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
-                          table.getColumn("OrgNam")?.setFilterValue(e.target.value);
+                          table.getColumn("orgnam")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />
             </div>
 
             {/* для выпадающей меню className="ml-auto" сдвиг налево до упора*/}
+            {/* вызывал ошибку во время рендеринга
+            
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button variant="outline" className="ml-auto">
@@ -199,7 +209,9 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
                   )
                 })}
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> 
+            
+            */}
         </div>
 
       {/* таблица */}

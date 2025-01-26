@@ -1,61 +1,81 @@
 
 
-"use server";
-
-import { db } from "@/lib/db";
 import { SprOrg } from "./types";
-
+import useSWR, { mutate } from 'swr';
+const url = './api/orgs';
 
 // ==============================================================================================
-export const GetSprOrg = async () => {
-  console.log("GetSprOrg=");
-  try {
-    const data = await db.sprorg.findMany();
-      console.log("data=",data);
-      return data;
-    } catch (error) {
-        console.error(error);
-    }
-};
+  async function getRequest() {
+    console.log("getRequest=",url);
+      const response = await fetch(url);
+      return response.json();
+  }
 
 //--------------------------------------------------------------
-export async function updateRow(id: number, postData: SprOrg) {
-    console.log("updateRow=",id,postData);
-    await db.sprorg.update
-    (
-        {
-         where: {id:id},
-         data: {orgadr: postData.orgadr,
-                orgnam: postData.orgnam,
-                orgtel: postData.orgtel,
-                orgdmu: postData.orgdmu}
-         } 
-    );
- }
- 
+async function updateRequest(id: number, data: SprOrg) {
+  const response = await fetch(`${url}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
  //--------------------------------------------------------------
-export async function deleteRow(id: number) {
+async function deleteRequest(id: number) {
     console.log("removeRow=",id);
-    await db.sprorg.delete
-    (
-        {where: {id:id}} 
-    );
- }
+    const response = await fetch(`${url}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    return response.json();
+ };
 
 
 //--------------------------------------------------------------
-export async function addRow(postData: SprOrg) {
-    console.log("addRow=",postData);
-    await db.sprorg.create
-    (
-        {
-         data: {orgkod: postData.orgkod,
-                orgcty: 1,
-                orgadr: postData.orgadr,
-                orgnam: postData.orgnam,
-                orgnamshr: postData.orgnamshr,
-                orgtel: postData.orgtel,
-                orgdmu: postData.orgdmu}
-         } 
-    );
- }
+
+ async function addRequest(data: SprOrg) {
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+ 
+ export default function useOrgs() {
+   const { data, isValidating } = useSWR(url,getRequest);
+   //console.log("useStudents_isValidating=",isValidating);
+
+    const updateRow = async (id: number, postData: SprOrg) => {
+      await updateRequest(id, postData);
+      mutate(url);
+    };
+  
+    const deleteRow = async (id: number) => {
+      console.log("useOrgs-deleteRow=");
+      await deleteRequest(id);
+      mutate(url);
+    };
+  
+    const addRow = async (postData: SprOrg) => {
+      await addRequest(postData);
+      mutate(url);
+    };
+  
+    return {
+      data: data ?? [],
+      isValidating,
+      addRow,
+      updateRow,
+      deleteRow
+    };
+  };
+

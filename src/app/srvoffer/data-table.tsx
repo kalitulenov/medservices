@@ -1,6 +1,4 @@
 
-
-
 "use client"
 
 import {
@@ -31,48 +29,59 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-//import { FooterCell } from "./FooterCell";
-import { updateRow } from "./actionsOffer";
-
+import { FooterCell } from "@/components/FooterCell";
+//import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprUslFrm } from "./types";
+import useOffers from "./actionsOffer";
+import { columns } from "./columns";
+//import { any } from "zod";
+
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprUslFrm, TValue>[];
     data: SprUslFrm[];
   }
 
-export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
+//export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
+   
+export const SprTable  = () => { 
  
-  const [dataSpr, setDataSpr] = useState(() => [...data]);
-  const [originalData, setOriginalData] = useState(() => [...data]);
+  //const {updateRow, addRow, deleteRow} =  useSprUslFrm(); 
+  const { data: originalData , isValidating, updateRow } = useOffers();
+
+  const [data, setData] = useState<SprUslFrm[]>([]);
+  //console.log("useEffect0=",isValidating);
+
+  //console.log("data-table-data0=",data);
+  //const [dataSpr, setDataSpr] = useState(() => [...data]);
+  //const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
   const [columnFilters,setColumnFilters] = useState<ColumnFiltersState>([])
   // для скрытие колонок. VisibilityState получаем из таблицы
-  //const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
-  const [columnVisibility, setColumnVisibility] = useState({
-    uslfrmhsp: false, //hide this column by default
-    uslfrmidn: false, //hide this column by default
-  });
+  const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
   // для отмеченных строк
   const [rowSelection,setrowSelection] = useState({})
 
   //const [datainp, setDatainp] = useState(() => [...data]); // для обновления
   // ------------------------------------------------------
   const [editedRows, setEditedRows] = React.useState({});
-  //const [validRows, setValidRows] = React.useState({});
+  const [validRows, setValidRows] = React.useState({});
 
-  const [isValidating, setIsValidating] = React.useState(true);
+  //const [isValidating, setIsValidating] = React.useState(true);
+  //const isValidating = true;
 
-  const [pagination, setPagination] = useState({
-    pageIndex: 0, //initial page index
-    pageSize: 10, //default page size
+    const [pagination, setPagination] = useState({
+    pageIndex: 0, //не работает
+    pageSize: 6,  //работает
     });
-  
-  //console.log("data-table-data=",data);
-  //console.log("data-table-dataSpr=",dataSpr);
-  //console.log("data-table-originalData=",originalData);
+
+  useEffect(() => {
+     if (isValidating) return; 
+        setData([...originalData]);
+  }, [isValidating]);
+
 
   const table = useReactTable({
     data,
@@ -81,74 +90,70 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     getPaginationRowModel: getPaginationRowModel(),   // для листания
     getSortedRowModel: getSortedRowModel(),           // для сортировки
     getFilteredRowModel: getFilteredRowModel(),       // для фильтраций
-    onPaginationChange: setPagination,                //update the pagination state when internal APIs mutate the pagination state
-
+    onPaginationChange: setPagination, // update the pagination state when internal APIs mutate the pagination state
+    initialState: {
+      pagination: {
+        pageIndex: 0, // работает
+        pageSize: 4, // не работает
+      },
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    // onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setrowSelection,
+   // manualPagination: true,               // new
       
     state: {
       sorting, 
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination,
+      pagination,     //   new
     },
     meta: {
-      editedRows,
-      setEditedRows,
+        editedRows,
+        setEditedRows,
+        validRows,
+        setValidRows,
+  
+        // ---------------------------------------------------------
+        revertData: (rowIndex: number) => {
+              setData((old) => old.map((row, index) => 
+                {
+                  if (index === rowIndex) {return {...originalData[rowIndex]}}
+                  else {return row} 
+                })
+              )
+          },
 
-      // ---------------------------------------------------------
-      revertData: (rowIndex: number) => {
-          console.log("revertData-originalData=",originalData);
-          // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-          // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-          // console.log("revertData-dataSpr2=",dataSpr);
-            console.log("revertData-dataSpr1=",dataSpr);
-            setIsValidating(!isValidating);
+        updateRow: (rowIndex: number) => {
+          console.log("data-table-updateRow=",rowIndex,data);
 
-            setDataSpr((old) => old.map((row, index) => 
-              {
-                if (index === rowIndex) {return {...originalData[rowIndex]}}
-                else {return row} 
-              })
-            )
+          updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
-      updateRow: (rowIndex: number) => {
-        console.log("data-table-updateRow=",rowIndex,dataSpr);
-
-        updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
-        setIsValidating(!isValidating);
-      },
-
-      updateData: (rowIndex: number, columnId: string, value: string) => {
-        setDataSpr((old) =>old.map((row, index) => 
+        updateData: (rowIndex: number, columnId: string, value: string) =>
           {
-            if (index === rowIndex) 
-              {
-                  // console.log("updateData-dataSpr1=",dataSpr);
-                  // console.log("updateData-data=",data);
-                  // console.log("updateData-originalData=",originalData);
-                  console.log("updateData-rowIndex=",rowIndex,columnId,value);
-                  // console.log("updateData-...old=",...old);
-                  console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
-                  return {...old[rowIndex],[columnId]: value,};
-              }
-            return row;
-          })
-        );
- //       setIsValidating(!isValidating);
- //       data=[...dataSpr];
-        // console.log("updateData-dataSpr2=",dataSpr);
-        // console.log("updateData-data2=",data);
-        // console.log("updateData-originalData2=",originalData);
+              console.log("updateData-begin=");
+       
+              setData((old) =>old.map((row, index) => 
+                {
+               //   console.log("updateData-old=",old);
+                  if (index === rowIndex) 
+                    {
+                        return {...old[rowIndex],[columnId]: value,};
+                    }
+                    return row;
+                })
+              );
+        },
       },
+    });
 
-    },
-  });
+  // console.log("Текущая2=",table.getState().pagination.pageIndex);
+  // console.log("Начальная2=",table.initialState.pagination.pageIndex);
 
+  table.initialState.pagination.pageIndex=table.getState().pagination.pageIndex;
 
   return (
     <div className="w-full">
@@ -156,7 +161,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
         <div className="flex">
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
-                <Input placeholder="Фильтр по услуге"
+                <Input placeholder="Filter hosp name"
                       value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
                           table.getColumn("uslnam")?.setFilterValue(e.target.value);
@@ -165,29 +170,6 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
                 />
             </div>
 
-            {/* для выпадающей меню className="ml-auto" сдвиг налево до упора*/}
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button variant="outline" className="ml-auto">
-                  Реквизиты
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table.getAllColumns().filter(column=>column.getCanHide()).map(column=>{
-                  return (
-                    <DropdownMenuCheckboxItem key={column.id} 
-                                              className="capitalize"
-                                              checked={column.getIsVisible()}
-                                              onCheckedChange={(value: boolean)=>{
-                                                                column.toggleVisibility(!!value);
-                                                              }}
-                      >
-                        {column.id}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
         </div>
 
       {/* таблица */}
@@ -233,6 +215,14 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
               </TableRow>
             )}
           </TableBody>
+
+          <tfoot>
+          <tr>
+            <th colSpan={table.getCenterLeafColumns().length} align="right">
+              <FooterCell table={table} />
+            </th>
+          </tr>
+        </tfoot>
 
         </Table>
       </div>
