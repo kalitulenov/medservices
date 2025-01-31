@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { getSession } from "@/actions";
 
 export async function GET(req: Request) {
-  console.log("route_GET=");
+ // console.log("route_GET=");
   const headerList = headers();         // полчить заголовок запроса
   const type = headerList.get("type");  // полчить в заголовок параметр
   const session = await getSession();
@@ -15,19 +15,18 @@ export async function GET(req: Request) {
       //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
       //  const orgnam = session.userorg;
         const orgkod = Number(session.userorgkod);
-        console.log("orgkod=",orgkod);
-        const result = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
-                                                    SprUsl.UslZen, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,
+       // console.log("orgkod=",orgkod);
+        const result = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf AS UslFrmTrf, SprUsl.UslNam AS UslFrmNam,  
+                                                    SprUsl.UslEdn AS UslFrmEdn, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,
                                                     CAST(${orgkod} AS INTEGER) AS UslFrmHsp, T.id AS UslFrmIdn
                                             FROM SprUsl LEFT OUTER JOIN
-                                              (SELECT SprUslFrm.id, true AS UslFrmFlg, UslFrmHsp,UslFrmTrf, 
-                                                      UslMinLet, UslMaxLet
+                                              (SELECT SprUslFrm.id, true AS UslFrmFlg, UslMinLet, UslMaxLet, UslFrmTrf
                                                 FROM SprUslFrm INNER JOIN SprOrg 
                                                               ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
                                                 WHERE SprOrg.OrgKod = ${orgkod}) AS T 
                                                       ON (SprUsl.UslTrf = T.UslFrmTrf)
                                             WHERE LENGTH(SprUsl.UslTrf)=11
-                                            ORDER BY SprUsl.UslTrf  LIMIT 25;`
+                                            ORDER BY SprUsl.UslTrf LIMIT 10;`
 
         return NextResponse.json(result);
   } catch (err) {

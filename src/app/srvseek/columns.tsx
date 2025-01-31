@@ -29,16 +29,6 @@ export const columns: ColumnDef<SprUslFrm>[] = [
         },
         accessorKey: "usltrf"
     },
-
-    // {
-    //     header: "Тарификатор",  
-    //     accessorKey: "UslTrf"
-    // },
-    {
-      header: "КодКлиники",  
-      accessorKey: "uslfrmhsp",
-      enableHiding: true,
-    },
     {
       header: "ID_Клиники",  
       accessorKey: "uslfrmidn",
@@ -46,11 +36,11 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     },
     {
         header: "Услуга",  
-        accessorKey: "uslnam"
+        accessorKey: "uslfrmnam"
     },
     {
         header: "Ед.изм",  
-        accessorKey: "usledn"
+        accessorKey: "uslfrmedn"
     },
     {
       header: "*",
@@ -73,12 +63,12 @@ export const columns: ColumnDef<SprUslFrm>[] = [
       accessorKey: "uslmaxlet",
       //cell: TableCell,
       //meta: {type: 'number',},
-    }
-    // {
-    //   header: "Edit",  
-    //   //cell: ({ row, table }) => EditCell({ row, table })
-    //   //cell: EditCell,
-    // }
+    },
+    {
+      header: "Клиника",  
+      accessorKey: "orgnam",
+    },
+
 
 
 

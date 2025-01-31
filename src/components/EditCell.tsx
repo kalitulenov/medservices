@@ -7,7 +7,6 @@ export const EditCell = ({ row, table }) => {
       const elName = e.currentTarget.name
 
       meta?.setEditedRows((old: []) => ({...old,[row.id]: !old[row.id],}))
-
       // отмена изменения
       if (elName === "cancel") {meta?.revertData(row.index)}
 

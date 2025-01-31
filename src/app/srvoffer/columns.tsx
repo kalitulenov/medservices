@@ -10,6 +10,7 @@ import { SprUslFrm } from './types';
 import { EditCell } from "@/components/EditCell";
 import { TableCell } from "@/components/TableCell";
 import { Checkbox } from "@/components/ui/checkbox";
+import React, { useEffect, useState } from 'react'
 
 export const columns: ColumnDef<SprUslFrm>[] = [
     {
@@ -25,7 +26,7 @@ export const columns: ColumnDef<SprUslFrm>[] = [
                   </Button>
                 )
         },
-        accessorKey: "usltrf"
+        accessorKey: "uslfrmtrf"
     },
     {
       header: "КодКлиники",  
@@ -39,48 +40,25 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     },
     {
         header: "Услуга",  
-        accessorKey: "uslnam"
+        accessorKey: "uslfrmnam"
     },
     {
         header: "Ед.изм",  
-        accessorKey: "usledn"
+        accessorKey: "uslfrmedn"
     },
     {
       header: "Выбор",
       accessorKey: "uslfrmflg",
-      // cell: ({ row }) => {
-      //   return (
-      //     <Checkbox
-      //       checked={row.getIsSelected()}
-      //       onCheckedChange={(value) => {
-      //         row.toggleSelected(!!value);
-      //       }}
-      //     />
-      //   );
-      // },
-  
-      //cell: TableCell,
+      cell: TableCell,
       // cell: ({row}) => {
       //   return <Checkbox checked={row.original.uslfrmflg}
       //   onCheckedChange={()=>{row.original.uslfrmflg=!row.original.uslfrmflg;
       //     console.log("TableCell-onCheckedChange=",row.original.uslfrmflg); 
       //     }}
       //   />},
-      cell: ({ row }) => {
-        return (
-          <Checkbox
-            checked={row.original.uslfrmflg}
-            onCheckedChange={() => {row.original.uslfrmflg=!row.original.uslfrmflg;
-              console.log("TableCell-onCheckedChange=",row.original.uslfrmflg);}
-      //     }}
-            }
-          />
-        );
-      },
-  
-
       meta: {type: 'boolean',},
     },
+
     {
       header: "Min_Возраст",  
       accessorKey: "uslminlet",
@@ -96,7 +74,8 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     {
       header: "Edit", 
       cell: EditCell,
-    }
+    },
+
 ]
 
 

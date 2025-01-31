@@ -37,10 +37,10 @@ import { columns } from "./columns";
 //import { any } from "zod";
 
 
-  interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprUslFrm, TValue>[];
-    data: SprUslFrm[];
-  }
+  // interface DataTableProps<TData, TValue> {
+  //   columns: ColumnDef<SprUslFrm, TValue>[];
+  //   data: SprUslFrm[];
+  // }
 
 //export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
    
@@ -51,7 +51,7 @@ export const SprTable  = () => {
 
   const [data, setData] = useState<SprUslFrm[]>([]);
   //console.log("useEffect0=",isValidating);
-
+  //console.log("data-table=",data);
   //console.log("data-table-data0=",data);
   //const [dataSpr, setDataSpr] = useState(() => [...data]);
   //const [originalData, setOriginalData] = useState(() => [...data]);
@@ -127,21 +127,21 @@ export const SprTable  = () => {
           },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,data);
+          console.log("data-table-updateRow=",rowIndex,data[rowIndex]);
 
           updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
         updateData: (rowIndex: number, columnId: string, value: string) =>
           {
-              console.log("updateData-begin=");
+           // console.log("updateData-begin=",rowIndex, columnId, value, typeof value);
        
               setData((old) =>old.map((row, index) => 
                 {
                //   console.log("updateData-old=",old);
                   if (index === rowIndex) 
                     {
-                        return {...old[rowIndex],[columnId]: value,};
+                       return {...old[rowIndex],[columnId]: value,};
                     }
                     return row;
                 })
@@ -162,9 +162,9 @@ export const SprTable  = () => {
             {/* для полей фильтраций */}
             <div className="flex items-center py-4">
                 <Input placeholder="Filter hosp name"
-                      value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
+                      value={table.getColumn("uslfrmnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
-                          table.getColumn("uslnam")?.setFilterValue(e.target.value);
+                          table.getColumn("uslfrmnam")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />

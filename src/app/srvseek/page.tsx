@@ -21,11 +21,9 @@ export default async function OfferPage() {
           const orgnam = session.userorg;
           const orgkod = Number(session.userorgkod);
           const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
-                                                     SprUsl.UslZen, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,
-                                                     CAST(${orgkod} AS INTEGER) AS UslFrmHsp, T.id AS UslFrmIdn
-                                              FROM SprUsl LEFT OUTER JOIN
-                                                (SELECT SprUslFrm.id, true AS UslFrmFlg, UslFrmHsp,UslFrmTrf, 
-                                                        UslMinLet, UslMaxLet
+                                                     SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslFrmNam
+                                              FROM SprUsl INNER JOIN
+                                                (SELECT UslMinLet, UslMaxLet, OrgNam
                                                  FROM SprUslFrm INNER JOIN SprOrg 
                                                                 ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
                                                  WHERE SprOrg.OrgKod = ${orgkod}) AS T 
@@ -33,9 +31,9 @@ export default async function OfferPage() {
                                               WHERE LENGTH(SprUsl.UslTrf)=11
                                               ORDER BY SprUsl.UslTrf  LIMIT 25;`
 
-          console.log("orgnam=",orgnam);
-          console.log("orgkod=",orgkod);
-          console.log(response);
+          // console.log("orgnam=",orgnam);
+          // console.log("orgkod=",orgkod);
+          // console.log(response);
           return response;
     } catch (error) {
       console.error(error);
