@@ -28,19 +28,16 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+//import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { FooterCell } from "@/components/FooterCell";
-//import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprUsr } from "./types";
 import useUsers from "./actionsUsr";
 import { columns } from "./columns";
-//import { any } from "zod";
 
-
-  interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprUsr, TValue>[];
-    data: SprUsr[];
-  }
+  // interface DataTableProps<TData, TValue> {
+  //   columns: ColumnDef<SprUsr, TValue>[];
+  //   data: SprUsr[];
+  // }
 
 //export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
    
@@ -50,11 +47,6 @@ export const SprTable  = () => {
   const { data: originalData , isValidating, deleteRow, updateRow, addRow} = useUsers();
 
   const [data, setData] = useState<SprUsr[]>([]);
-  //console.log("useEffect0=",isValidating);
-
-  //console.log("data-table-data0=",data);
-  //const [dataSpr, setDataSpr] = useState(() => [...data]);
-  //const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
@@ -101,8 +93,6 @@ export const SprTable  = () => {
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setrowSelection,
-   // manualPagination: true,               // new
-      
     state: {
       sorting, 
       columnFilters,
@@ -138,7 +128,6 @@ export const SprTable  = () => {
        
               setData((old) =>old.map((row, index) => 
                 {
-               //   console.log("updateData-old=",old);
                   if (index === rowIndex) 
                     {
                         return {...old[rowIndex],[columnId]: value,};
@@ -170,9 +159,6 @@ export const SprTable  = () => {
   
       },
     });
-
-  // console.log("Текущая2=",table.getState().pagination.pageIndex);
-  // console.log("Начальная2=",table.initialState.pagination.pageIndex);
 
   table.initialState.pagination.pageIndex=table.getState().pagination.pageIndex;
 

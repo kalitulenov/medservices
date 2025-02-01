@@ -30,11 +30,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { FooterCell } from "@/components/FooterCell";
-//import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprUslFrm } from "./types";
 import useOffers from "./actionsOffer";
 import { columns } from "./columns";
-//import { any } from "zod";
 
 
   // interface DataTableProps<TData, TValue> {
@@ -60,7 +58,10 @@ export const SprTable  = () => {
   // для фильтрации ColumnFiltersState получаем из таблицы
   const [columnFilters,setColumnFilters] = useState<ColumnFiltersState>([])
   // для скрытие колонок. VisibilityState получаем из таблицы
-  const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = useState({
+    uslfrmidn: false,
+    uslfrmhsp: false, //hide this column by default
+  });
   // для отмеченных строк
   const [rowSelection,setrowSelection] = useState({})
 
@@ -97,11 +98,11 @@ export const SprTable  = () => {
         pageSize: 4, // не работает
       },
     },
+    
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
+    //onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setrowSelection,
-   // manualPagination: true,               // new
       
     state: {
       sorting, 

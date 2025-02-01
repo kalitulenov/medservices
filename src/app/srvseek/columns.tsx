@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SprUslFrm } from './types';
+import { SprUslSeek } from './types';
 
 import { useEffect, useState } from "react";
 import { spruslfrm } from "@prisma/client";
 
-export const columns: ColumnDef<SprUslFrm>[] = [
+export const columns: ColumnDef<SprUslSeek>[] = [
     {
         // header: "ID",  
         // для сортировки столбца
@@ -30,27 +30,12 @@ export const columns: ColumnDef<SprUslFrm>[] = [
         accessorKey: "usltrf"
     },
     {
-      header: "ID_Клиники",  
-      accessorKey: "uslfrmidn",
-      enableHiding: true,
-    },
-    {
         header: "Услуга",  
-        accessorKey: "uslfrmnam"
+        accessorKey: "uslnam"
     },
     {
         header: "Ед.изм",  
-        accessorKey: "uslfrmedn"
-    },
-    {
-      header: "*",
-      accessorKey: "uslfrmflg",
-      cell: ({row}) => {
-        const offer = row.original;
-        var offerflg = offer.uslfrmflg;
-        return <Checkbox checked={offerflg}
-        />},
-      //meta: {type: 'boolean',},
+        accessorKey: "usledn"
     },
     {
       header: "Min_Возраст",  
@@ -66,11 +51,8 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     },
     {
       header: "Клиника",  
-      accessorKey: "orgnam",
+      accessorKey: "uslhspnam",
     },
-
-
-
 
 ]
 

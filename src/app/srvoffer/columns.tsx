@@ -31,12 +31,10 @@ export const columns: ColumnDef<SprUslFrm>[] = [
     {
       header: "КодКлиники",  
       accessorKey: "uslfrmhsp",
-      enableHiding: true,
     },
     {
       header: "ID_Клиники",  
       accessorKey: "uslfrmidn",
-      enableHiding: true,
     },
     {
         header: "Услуга",  

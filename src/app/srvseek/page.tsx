@@ -1,7 +1,4 @@
 
-
-
-
 import React from 'react'
 import { SprTable } from './data-table'
 import { columns } from './columns'
@@ -21,15 +18,15 @@ export default async function OfferPage() {
           const orgnam = session.userorg;
           const orgkod = Number(session.userorgkod);
           const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
-                                                     SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslFrmNam
+                                                     SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslHspNam
                                               FROM SprUsl INNER JOIN
-                                                (SELECT UslMinLet, UslMaxLet, OrgNam
+                                                (SELECT UslMinLet, UslMaxLet, UslFrmTrf, OrgNam
                                                  FROM SprUslFrm INNER JOIN SprOrg 
                                                                 ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
-                                                 WHERE SprOrg.OrgKod = ${orgkod}) AS T 
+                                                 WHERE SprOrg.OrgKod <> ${orgkod}) AS T 
                                                         ON (SprUsl.UslTrf = T.UslFrmTrf)
                                               WHERE LENGTH(SprUsl.UslTrf)=11
-                                              ORDER BY SprUsl.UslTrf  LIMIT 25;`
+                                              ORDER BY SprUsl.UslTrf  LIMIT 2500;`
 
           // console.log("orgnam=",orgnam);
           // console.log("orgkod=",orgkod);

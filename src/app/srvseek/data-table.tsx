@@ -32,17 +32,17 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+//import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 //import { FooterCell } from "./FooterCell";
 //import { updateRow } from "./actionsSeek";
 import "./table.css";
 
 
-import { SprUslFrm } from "./types";
+import { SprUslSeek } from "./types";
 
   interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprUslFrm, TValue>[];
-    data: SprUslFrm[];
+    columns: ColumnDef<SprUslSeek, TValue>[];
+    data: SprUslSeek[];
   }
 
 export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
@@ -109,49 +109,6 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
     meta: {
       editedRows,
       setEditedRows,
-
-      // ---------------------------------------------------------
-      revertData: (rowIndex: number) => {
-          console.log("revertData-originalData=",originalData);
-          // setDataSpr((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-          // setOriginalData((old) =>old.map((row, index) =>index === rowIndex ? originalData[rowIndex] : row));
-          // console.log("revertData-dataSpr2=",dataSpr);
-            console.log("revertData-dataSpr1=",dataSpr);
-            setIsValidating(!isValidating);
-
-            setDataSpr((old) => old.map((row, index) => 
-              {
-                if (index === rowIndex) {return {...originalData[rowIndex]}}
-                else {return row} 
-              })
-            )
-        },
-
-    //   updateRow: (rowIndex: number) => {
-    //     console.log("data-table-updateRow=",rowIndex,dataSpr);
-
-    //     updateRow(dataSpr[rowIndex].id, dataSpr[rowIndex]);
-    //     setIsValidating(!isValidating);
-    //   },
-
-    //   updateData: (rowIndex: number, columnId: string, value: string) => {
-    //     setDataSpr((old) =>old.map((row, index) => 
-    //       {
-    //         if (index === rowIndex) 
-    //           {
-    //               // console.log("updateData-dataSpr1=",dataSpr);
-    //               // console.log("updateData-data=",data);
-    //               // console.log("updateData-originalData=",originalData);
-    //               console.log("updateData-rowIndex=",rowIndex,columnId,value);
-    //               // console.log("updateData-...old=",...old);
-    //               console.log("updateData-...old[rowIndex]=",{...old[rowIndex],[columnId]: value});
-    //               return {...old[rowIndex],[columnId]: value,};
-    //           }
-    //         return row;
-    //       })
-    //     );
-    //  },
-
     },
   });
 

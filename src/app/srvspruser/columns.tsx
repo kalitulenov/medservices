@@ -4,7 +4,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,8 +11,6 @@ import { EditCell } from "@/components/EditCell";
 import { SprUsr } from './types';
 
 import { TableCell } from "@/components/TableCell";
-
-import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<SprUsr>[] = [
     {
@@ -75,16 +72,6 @@ export const columns: ColumnDef<SprUsr>[] = [
             required: true,
       },
     },
-
-    // {header: 'Клиника',
-    //   accessorKey: "UsrOrg",
-    //   cell: TableCell,
-    //   meta: {
-    //         type: 'text',
-    //   },
-    // },
-
-
     {
       header: "Логин",  
       accessorKey: "usrlog",

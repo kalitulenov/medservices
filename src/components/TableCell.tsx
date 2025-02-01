@@ -98,17 +98,17 @@ type Option = {
          if (columnMeta?.type === "boolean")
          {
           return (
-          // <input
-          //         value={value}
-          //         onChange={onCheckedChange}
-          //        // onBlur={onBlur}
-          //         type={"checkbox"}
-          // />
-          <Checkbox checked={row.original.uslfrmflg}
-                    onCheckedChange={()=>{row.original.uslfrmflg=!row.original.uslfrmflg;
-                      tableMeta?.updateData(row.index, column.id, row.original.uslfrmflg)
-                    }}
-               />
+          <input
+                  value={value}
+                  onChange={onCheckedChange}
+                 // onBlur={onBlur}
+                  type={"checkbox"}
+          />
+          // <Checkbox checked={row.original.uslfrmflg}
+          //           onCheckedChange={()=>{row.original.uslfrmflg=!row.original.uslfrmflg;
+          //             tableMeta?.updateData(row.index, column.id, row.original.uslfrmflg)
+          //           }}
+          //      />
         );
       } 
   }

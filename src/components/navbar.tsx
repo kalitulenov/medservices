@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getSession } from "@/actions";
 import { LogOut } from "lucide-react";
 import LogoutForm from "./LogoutForm";
-import { MobileNavbar } from "./MobileNavbar";
+import { MobileNavbar } from "./MobileNavbar_XXX";
 import { db } from "@/lib/db";
 import { toast } from "./ui/use-toast";
 
@@ -86,38 +86,25 @@ const navItems = data;
 
                   {/* map требует предварительную проверку */}
                   {navItems instanceof Array 
-                  ?
-                  (navItems.map((navItem: Readonly<NavItem>) => (
-                    <Link href={navItem.href} key={navItem.id} className="link">
-                      {navItem.label}
-                    </Link>
-                  ))) 
-                  : 
-                  (<h1>some other code as navItems is not an Array </h1>)
-                  }
+                    ?
+                        (navItems.map((navItem: Readonly<NavItem>) => (
+                          <Link href={navItem.href} key={navItem.id} className="link">
+                            {navItem.label}
+                          </Link>
+                        ))) 
+                    : 
+                        (<h1>some other code as navItems is not an Array </h1>)
+                    }
               </div>
-        //   <div className="hidden md:flex space-x-4 ">
-        //     <Link href={"#home"} className="link">
-        //     Home
-        //     </Link>
-        //     <Link href={"#about"} className="link">
-        //     About
-        //     </Link>
-        //     <Link href={"#services"} className="link">
-        //     Services
-        //     </Link>
-        //     <Link href={"#contact"} className="link">
-        //     Contact
-        //     </Link>
-        // </div>
-    
           )}
           <div className="hidden md:flex">
-                {session.isLoggedIn ? (<LogoutForm />) 
-                                    : 
-                                    (<Link className={buttonVariants()} href="/login">
-                                        Sign in
-                                    </Link>)}
+                {session.isLoggedIn 
+                  ? 
+                      (<LogoutForm />) 
+                  : 
+                      (<Link className={buttonVariants()} href="/login">
+                          Sign in
+                      </Link>)}
           </div>
         <MobileNavbar/>
       </div>
@@ -128,66 +115,3 @@ const navItems = data;
   );
 }
 
-//export default Navbar;
-
-// const data = {
-//   data: {
-//     id: 3,
-//     documentId: 'ph0ub6mu326lpcdn1hz87iom',
-//     title: 'Global settings',
-//     description: 'Responsible for our top nav and footer.',
-//     createdAt: '2024-08-31T00:36:59.847Z',
-//     updatedAt: '2024-08-31T22:26:40.129Z',
-//     publishedAt: '2024-08-31T22:26:40.238Z',
-//     locale: null,
-//     topNavigation: {
-//       id: 3,
-//       logoTitle: {
-//         id: 12,
-//         label: 'Awesome Web',
-//         href: '/',
-//         isExternal: false,
-//         type: 'LINK'
-//       },
-
-//       navItems: [
-//         {
-//           id: 13,
-//           label: 'Home',
-//           href: '/',
-//           isExternal: false,
-//           type: 'LINK'
-//         },
-//         {
-//           id: 14,
-//           label: 'About',
-//           href: '/about',
-//           isExternal: false,
-//           type: 'LINK'
-//         },
-//         {
-//           id: 15,
-//           label: 'Blog',
-//           href: '/blog',
-//           isExternal: false,
-//           type: 'LINK'
-//         },
-//         {
-//           id: 16,
-//           label: 'Test',
-//           href: '/test',
-//           isExternal: false,
-//           type: 'LINK'
-//         }
-//       ],
-//       cta: {
-//         id: 17,
-//         label: 'CTA',
-//         href: 'https://www.codingafterthirty.com',
-//         isExternal: true,
-//         type: 'PRIMARY'
-//       }
-//     }
-//   },
-//   meta: {}
-// }

@@ -1,7 +1,19 @@
 "use client";
 
-//import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormDescription,
+  FormMessage,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import * as z  from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -14,12 +26,23 @@ const INITIAL_STATE = {
   zodErrors: null,
   message: null,
   data: {
-    username: "",
-    password: "",
+    UsrLog: "",
+    UsrPsw: "",
   }
 }
 
-const LoginForm = () => {
+// схема проверки формы
+const FormSchema = z.object({
+  UsrLog: z.
+      string().
+      min(1, 'Username is required1'),
+  UsrPsw: z.
+      string().
+      min(1, 'Password is required1').
+      min(4, 'Password must have than 4 characters1'),
+});
+
+const LoginFormOld = () => {
   // передаем useFormState функцию login из actions.ts
   // первоначальное состояние undefined (чтобы не было сообщении об ошибке)
   // в login передаем любые данные any и данные этой формы через FormData
@@ -32,53 +55,89 @@ const LoginForm = () => {
   const { toast } = useToast();
   const router = useRouter();
 
-  const {username, password} = formState?.data || {};
+  //const {preUserName, prePassWord} = formState?.data || {};
 
-  console.log("formState?.message2=",formState?.message);
-  console.log("formState?=",formState);
+  console.log("formState?.message=",formState?.message);
   // console.log("preUserName=",preUserName);
   // console.log("prePassWord=",prePassWord);
 
   useEffect(() => {
-    console.log("useEffect=",formState?.message);
-    toast({
-      title: formState?.message ? "Error" : "Success",
-      description: formState.message,
-      variant:"destructive",
-    });
-  }, [formState, toast]);
+    // console.log("useEffect=",formState?.message);
+    if (formState?.message) {
+        toast({
+          title: formState?.message,
+          description: formState.message,
+          variant:"destructive",
+          })}
+      }, [formState?.message]);
+
+
+  // устанвливаем схему проверки формы
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      UsrLog: "",
+      UsrPsw: "",
+    },
+  });
+
+  console.log("formState=", formState);
 
 
   return (
-        <form action={formAction} className="flex flex-col gap-3">
-            <div className="space-y-2">
-                <label htmlFor="username">Username</label>
-                <input id="username" name="username" defaultValue={username}
-                type="text" placeholder="username"/>
-                
-                {formState?.zodErrors?.formUsername}
-                
-            </div>
-            <div className="space-y-2">
-                <label htmlFor="password">Password</label>
-                <input id="password" name="password" defaultValue={password}
-                type="password" placeholder="password"/>
-                
-                {formState?.zodErrors?.formPassword}
-            </div>
-            <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
-                      Login
-            </button>
+    <Form {...form}>
+      <form action={formAction} className="w-full">
+        <div className="space-y-2">
+          {/* username */}
+          <FormField
+            control={form.control}
+            name="usrlog"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Логин</FormLabel>
+                <FormControl>
+                  <Input placeholder="usrlog" {...field}  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        </form>
-  )
-}
-        // {
-        //   formState.message ? 
-        //    <div className='my-2 p-2 bg-red-200 border rounded border-red-400'>  
-        //          {formState.message}
-        //    </div> : null
-        // }
+          {/* password */}
+          <FormField
+            control={form.control}
+            name="usrpsw"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Пароль</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="password" {...field}  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button className="w-full mt-6" type="submit">
+          Вход
+        </Button>
 
+        {/* formAction возврашает состояние в state после выполнении серверной функции login из actions.ts  */}
+        {/* если ошибка то вывод сообщение */}
+        {/* {formState?.error && <p>{formState.error}</p>} */}
+
+        {/* {
+          formState.message ? 
+           <div className='my-2 p-2 bg-red-200 border rounded border-red-400'>  
+                 {formState.message}
+           </div> : null
+        } */}
+
+
+
+      </form>
+    </Form>
+  );
+};
 
 export default LoginForm;

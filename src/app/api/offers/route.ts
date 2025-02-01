@@ -26,7 +26,7 @@ export async function GET(req: Request) {
                                                 WHERE SprOrg.OrgKod = ${orgkod}) AS T 
                                                       ON (SprUsl.UslTrf = T.UslFrmTrf)
                                             WHERE LENGTH(SprUsl.UslTrf)=11
-                                            ORDER BY SprUsl.UslTrf LIMIT 10;`
+                                            ORDER BY SprUsl.UslTrf LIMIT 1000;`
 
         return NextResponse.json(result);
   } catch (err) {

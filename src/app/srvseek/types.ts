@@ -1,14 +1,11 @@
 
 
-export type SprUslFrm = {
+export type SprUslSeek = {
     id: number
-    uslfrmhsp: number
-    uslfrmidn: number
-    uslfrmtrf: string
-    uslfrmedn: string 
-    uslfrmnam: string
-    uslfrmflg: boolean
+    usltrf: string
+    uslnam: string
+    usledn: string 
     uslminlet: number
     uslmaxlet: number
+    uslhspnam: string
   }
-  
