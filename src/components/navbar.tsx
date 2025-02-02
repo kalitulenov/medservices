@@ -2,40 +2,15 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { getSession } from "@/actions";
-import { LogOut } from "lucide-react";
 import LogoutForm from "./LogoutForm";
-import { MobileNavbar } from "./MobileNavbar_XXX";
+import { MobileNavbar } from "./MobileNavbar";
 import { db } from "@/lib/db";
-import { toast } from "./ui/use-toast";
 
 export async function Navbar() {
 
   // получаем расшифрованный ключ из actions.ts
   const session = await getSession();
-  console.log('session_Nav=',session);
-
-//  const dataDB = [
-//   {
-//     "id": 1,
-//     "href": "/",
-//     "label": "Home1",
-//     "isExternal": false,
-//   },
-//   {
-//     "id": 2,
-//     "href": "/about",
-//     "label": "About1",
-//     "isExternal": false,
-//   },
-
-//   {
-//     id: 3,
-//     "href": "/blog",
-//     "label": "Blog1",
-//     "isExternal": false,
-//   },
-// ];
-
+ // console.log('session_Nav=',session);
 
 //  структура меню -------------------
 interface NavItem {
@@ -76,7 +51,7 @@ const navItems = data;
   return (
     <div className="bg-sky-400 py-1 border-b border-s-sky-200 w-full z-10 top-0 ">
       <div className="flex justify-between border-2 mx-2 gap-2">
-      <div className="text-white text-3xl font-bold">ВИТРИНА</div>
+      <div className="text-white text-3xl font-bold">ВИТРИНА МЕДИЦИНСКИХ УСЛУГ</div>
         {/* <div className="flex gap-2"> */}
         {/* <Link className={buttonVariants()} href="/login">Sign in</Link> */}
         {/* {session.isLoggedIn ? <Link className={buttonVariants()} href="/logOut">Log Out</Link> : <Link className={buttonVariants()} href="/login">Sign in</Link>} */}

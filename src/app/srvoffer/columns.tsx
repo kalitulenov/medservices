@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 //import { Checkbox } from "@/components/ui/checkbox";
-import { SprUslFrm } from './types';
+import { SprUslFrm } from '@/components/types';
 import { EditCell } from "@/components/EditCell";
 import { TableCell } from "@/components/TableCell";
 import { Checkbox } from "@/components/ui/checkbox";

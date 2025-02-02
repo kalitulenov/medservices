@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SprOrg } from './types';
+import { SprOrg } from '@/components/types';
 
 import { EditCell } from "@/components/EditCell";
 import { TableCell } from "@/components/TableCell";
@@ -15,23 +15,23 @@ import { TableCell } from "@/components/TableCell";
 import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<SprOrg>[] = [
-    {
-      id: "select",
-      header: ({table})=>{
-        return <Checkbox
-                  checked={table.getIsAllPageRowsSelected()}
-                  onCheckedChange={(value)=>{table.toggleAllPageRowsSelected(!!value);}}
-                />
-      },
-      cell: ({row}) => {
-        return <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value)=>{row.toggleSelected(!!value);}}
-      />
-      },
-      enableSorting: false,
-      enableHiding: false,
-    },
+    // {
+    //   id: "select",
+    //   header: ({table})=>{
+    //     return <Checkbox
+    //               checked={table.getIsAllPageRowsSelected()}
+    //               onCheckedChange={(value)=>{table.toggleAllPageRowsSelected(!!value);}}
+    //             />
+    //   },
+    //   cell: ({row}) => {
+    //     return <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value)=>{row.toggleSelected(!!value);}}
+    //   />
+    //   },
+    //   enableSorting: false,
+    //   enableHiding: false,
+    // },
     {
         // header: "ID",  
         // для сортировки столбца

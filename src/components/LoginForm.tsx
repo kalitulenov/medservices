@@ -15,7 +15,7 @@ import * as z  from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 
 import { login } from "@/actions";
 import { useFormState } from "react-dom";
@@ -42,7 +42,7 @@ const FormSchema = z.object({
       min(4, 'Password must have than 4 characters1'),
 });
 
-const LoginFormOld = () => {
+const LoginForm = () => {
   // передаем useFormState функцию login из actions.ts
   // первоначальное состояние undefined (чтобы не было сообщении об ошибке)
   // в login передаем любые данные any и данные этой формы через FormData
@@ -53,13 +53,11 @@ const LoginFormOld = () => {
   // и вызывается функцию login из actions.ts и передается ему данные формы через FormData и состояние undefined
 
   const { toast } = useToast();
-  const router = useRouter();
+  //const router = useRouter();
 
   //const {preUserName, prePassWord} = formState?.data || {};
 
-  console.log("formState?.message=",formState?.message);
-  // console.log("preUserName=",preUserName);
-  // console.log("prePassWord=",prePassWord);
+ // console.log("formState?.message=",formState?.message);
 
   useEffect(() => {
     // console.log("useEffect=",formState?.message);
@@ -80,9 +78,6 @@ const LoginFormOld = () => {
       UsrPsw: "",
     },
   });
-
-  console.log("formState=", formState);
-
 
   return (
     <Form {...form}>
@@ -125,15 +120,6 @@ const LoginFormOld = () => {
         {/* formAction возврашает состояние в state после выполнении серверной функции login из actions.ts  */}
         {/* если ошибка то вывод сообщение */}
         {/* {formState?.error && <p>{formState.error}</p>} */}
-
-        {/* {
-          formState.message ? 
-           <div className='my-2 p-2 bg-red-200 border rounded border-red-400'>  
-                 {formState.message}
-           </div> : null
-        } */}
-
-
 
       </form>
     </Form>

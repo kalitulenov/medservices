@@ -8,28 +8,28 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { EditCell } from "@/components/EditCell";
-import { SprUsr } from './types';
+import { SprUsr } from '@/components/types';
 
 import { TableCell } from "@/components/TableCell";
 
 export const columns: ColumnDef<SprUsr>[] = [
-    {
-      id: "select",
-      header: ({table})=>{
-        return <Checkbox
-                  checked={table.getIsAllPageRowsSelected()}
-                  onCheckedChange={(value)=>{table.toggleAllPageRowsSelected(!!value);}}
-                />
-      },
-      cell: ({row}) => {
-        return <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value)=>{row.toggleSelected(!!value);}}
-      />
-      },
-      enableSorting: false,
-      enableHiding: false,
-    },
+    // {
+    //   id: "select",
+    //   header: ({table})=>{
+    //     return <Checkbox
+    //               checked={table.getIsAllPageRowsSelected()}
+    //               onCheckedChange={(value)=>{table.toggleAllPageRowsSelected(!!value);}}
+    //             />
+    //   },
+    //   cell: ({row}) => {
+    //     return <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value)=>{row.toggleSelected(!!value);}}
+    //   />
+    //   },
+    //   enableSorting: false,
+    //   enableHiding: false,
+    // },
     {
         // header: "ID",  
         // для сортировки столбца

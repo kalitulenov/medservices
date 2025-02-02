@@ -1,6 +1,6 @@
 
 
-import { SprOrg } from "./types";
+import { SprOrg } from "@/components/types";
 import useSWR, { mutate } from 'swr';
 const url = './api/orgs';
 

@@ -35,10 +35,10 @@ import { Input } from "@/components/ui/input";
 //import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 //import { FooterCell } from "./FooterCell";
 //import { updateRow } from "./actionsSeek";
-import "./table.css";
+import "@/components/table.css";
 
 
-import { SprUslSeek } from "./types";
+import { SprUslSeek } from "@/components/types";
 
   interface DataTableProps<TData, TValue> {
     columns: ColumnDef<SprUslSeek, TValue>[];
@@ -116,16 +116,17 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   return (
     <div className="w-full">
       {/* ----------   заголовок -------------------------- */}
-        <div className="flex">
+        <div className="flex flex-col">
             {/* для полей фильтраций по тарификатору */}
-            <div className="flex items-center py-2 ">
-                <Input placeholder="Фильтр по тарификатору"
+            <div className="flex items-center w-full ">
+                <Input placeholder="Фильтр для услуг"
                       value={table.getColumn("uslnam")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
                           table.getColumn("uslnam")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />
+                <h1 className="rounded-md border bg-green-200 text-2xl font-bold text-center w-full">ИЩУ</h1>
             </div>
 
             {/* для полей фильтраций по наменованию */}
@@ -195,7 +196,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
                 onClick={()=>{table.previousPage();}} 
                 disabled={!table.getCanPreviousPage()}  // отключить кнопку если нет предыдущ страницы
         >
-          Previous
+          Предыдущий
         </Button>
 
         {/* кнопка для перехода на след страницу */}
@@ -204,14 +205,14 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
                 onClick={()=>{table.nextPage();}} 
                 disabled={!table.getCanNextPage()}  // отключить кнопку если нет след страницы
         >
-          Next
+          Следующий
         </Button>
 
       </div>
       {/* показать кол выьранных строк */}
       <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of {" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected
+            {table.getFilteredSelectedRowModel().rows.length} из {" "}
+            {table.getFilteredRowModel().rows.length} строк выбранных
       </div>
 
     </div>

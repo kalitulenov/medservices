@@ -1,5 +1,5 @@
 
-import { SprUslFrm } from "./types";
+import { SprUslFrm } from "@/components/types";
 import useSWR, { mutate } from 'swr';
 const url = './api/offers';
 

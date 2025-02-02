@@ -30,7 +30,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 //import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { FooterCell } from "@/components/FooterCell";
-import { SprUsr } from "./types";
+import { SprUsr } from "@/components/types";
 import useUsers from "./actionsUsr";
 import { columns } from "./columns";
 
@@ -66,7 +66,7 @@ export const SprTable  = () => {
 
     const [pagination, setPagination] = useState({
     pageIndex: 0, //не работает
-    pageSize: 6,  //работает
+    pageSize: 10,  //работает
     });
 
   useEffect(() => {
@@ -167,14 +167,15 @@ export const SprTable  = () => {
       {/* ----------   заголовок -------------------------- */}
         <div className="flex">
             {/* для полей фильтраций */}
-            <div className="flex items-center py-4">
-                <Input placeholder="Filter hosp name"
+            <div className="flex items-center py-2 w-full">
+                <Input placeholder="Фильтр для ползавтелей"
                       value={table.getColumn("usrfio")?.getFilterValue() as string || ""} 
                       onChange={(e) => {
                           table.getColumn("usrfio")?.setFilterValue(e.target.value);
                       }}
                       className="max-w-sm"
                 />
+                <h1 className="rounded-md border bg-green-200 text-2xl font-bold text-center w-full">ПОЛЬЗОВАТЕЛИ</h1>
             </div>
 
             {/* для выпадающей меню className="ml-auto" сдвиг налево до упора*/}
@@ -268,7 +269,7 @@ export const SprTable  = () => {
                 onClick={()=>{table.previousPage();}} 
                 disabled={!table.getCanPreviousPage()}  // отключить кнопку если нет предыдущ страницы
         >
-          Previous
+          Предыдущий
         </Button>
 
         {/* кнопка для перехода на след страницу */}
@@ -277,14 +278,14 @@ export const SprTable  = () => {
                 onClick={()=>{table.nextPage();}} 
                 disabled={!table.getCanNextPage()}  // отключить кнопку если нет след страницы
         >
-          Next
+          Следующий
         </Button>
 
       </div>
       {/* показать кол выьранных строк */}
       <div className="flex-1 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of {" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected
+            {table.getFilteredSelectedRowModel().rows.length} из {" "}
+            {table.getFilteredRowModel().rows.length} строк выбранных
       </div>
 
     </div>

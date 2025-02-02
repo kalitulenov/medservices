@@ -22,7 +22,7 @@ export const FooterCell = ({ table }) => {
           </button>
         ) : null} */}
         <button className="add-button" onClick={meta?.addRow}>
-          Add New +
+          Новая запись +
         </button>
       </div>
     );

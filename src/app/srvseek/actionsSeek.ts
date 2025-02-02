@@ -5,7 +5,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { SprUslFrm} from "./types";
+import { SprUslFrm} from "@/components/types";
 
 
 // ==============================================================================================

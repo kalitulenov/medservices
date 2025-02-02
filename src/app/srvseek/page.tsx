@@ -8,7 +8,7 @@ import { getSession } from '@/actions';
 export default async function OfferPage() {
    // получаем расшифрованный ключ из actions.ts
    const session = await getSession();
-   console.log('session_Nav=',session);
+  // console.log('session_Nav=',session);
    
     // загрузка меню из БД ---------------------------
   async function loader() {
@@ -28,9 +28,6 @@ export default async function OfferPage() {
                                               WHERE LENGTH(SprUsl.UslTrf)=11
                                               ORDER BY SprUsl.UslTrf  LIMIT 2500;`
 
-          // console.log("orgnam=",orgnam);
-          // console.log("orgkod=",orgkod);
-          // console.log(response);
           return response;
     } catch (error) {
       console.error(error);
@@ -38,7 +35,7 @@ export default async function OfferPage() {
   }
   
   // загрузка меню из БД ---------------------------
-  console.log("SeekPage")
+ // console.log("SeekPage")
   const defaultData: any = await loader();
   // если пусто ---------------------------
   //if (!defaultData) return <h1>no datafound</h1>
@@ -53,5 +50,3 @@ export default async function OfferPage() {
     </div>  
    )
 }
-
-//export default SprOrgPage;
