@@ -5,7 +5,7 @@ const url = './api/offers';
 
 // ==============================================================================================
   async function getRequest() {
-    console.log("getRequest=",url);
+ //   console.log("getRequest=",url);
       const response = await fetch(url);
       return response.json();
   }

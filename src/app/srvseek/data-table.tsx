@@ -15,7 +15,7 @@ import {
     SortingState,
     ColumnFiltersState,
     useReactTable,
-    VisibilityState,
+   // VisibilityState,
     // getFilteredRowModel,
     // getSortedRowModel,
   } from "@tanstack/react-table";
@@ -29,7 +29,7 @@ import {
     TableRow,
   } from "@/components/ui/table";
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 //import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -38,24 +38,30 @@ import { Input } from "@/components/ui/input";
 import "@/components/table.css";
 
 
-import { SprUslSeek } from "@/components/types";
+//import { SprUslSeek } from "@/components/types";
+
+  // interface DataTableProps<TData, TValue> {
+  //   columns: ColumnDef<TData, TValue>[];
+  //   data: SprUslSeek[];
+  // }
 
   interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprUslSeek, TValue>[];
-    data: SprUslSeek[];
+    columns: ColumnDef<TData, TValue>[];
+    data: TData[];
   }
 
-export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TValue>) {
+  export function SprTable<TData, TValue>({columns, data,}: DataTableProps<TData, TValue>) {
+//export function SprTable<SprUslSeek, TValue>({columns,data}: DataTableProps<SprUslSeek, TValue>) {
  
-  const [dataSpr, setDataSpr] = useState(() => [...data]);
-  const [originalData, setOriginalData] = useState(() => [...data]);
+  // const [dataSpr, setDataSpr] = useState(() => [...data]);
+  // const [originalData, setOriginalData] = useState(() => [...data]);
   // для сортировки. SortingState получаем из таблицы
   const [sorting,setSorting] = useState<SortingState>([])
   // для фильтрации ColumnFiltersState получаем из таблицы
   const [columnFilters,setColumnFilters] = useState<ColumnFiltersState>([])
   // для скрытие колонок. VisibilityState получаем из таблицы
   //const [columnVisibility,setColumnVisibility] = useState<VisibilityState>({})
-  const [columnVisibility, setColumnVisibility] = useState({
+  const [columnVisibility] = useState({
     uslfrmhsp: false, //hide this column by default
     uslfrmidn: false, //hide this column by default
   });
@@ -67,7 +73,7 @@ export function SprTable<TData, TValue>({columns,data}: DataTableProps<TData, TV
   const [editedRows, setEditedRows] = React.useState({});
   //const [validRows, setValidRows] = React.useState({});
 
-  const [isValidating, setIsValidating] = React.useState(true);
+ // const [isValidating, setIsValidating] = React.useState(true);
 
   const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index

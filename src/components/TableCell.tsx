@@ -3,7 +3,7 @@
 
 import { useState, useEffect, ChangeEvent } from "react";
 import "./table.css";
-import { Checkbox } from "./ui/checkbox";
+//import { Checkbox } from "./ui/checkbox";
 
 type Option = {
     label: string;
@@ -15,7 +15,7 @@ type Option = {
     const columnMeta = column.columnDef.meta
     const tableMeta = table.options.meta
     const [value, setValue] = useState(initialValue)
-    const [validationMessage, setValidationMessage] = useState("");
+    const [validationMessage] = useState("");
 
  //   console.log("TableCell-tableMeta=",tableMeta);
  //   console.log("TableCell-initialValue=",initialValue);
@@ -24,8 +24,8 @@ type Option = {
    //   console.log("TableCell-useEffect=",initialValue);
       setValue(initialValue)}, [initialValue])
 
-      const onCheckedChange = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("TableCell-onCheckedChange=",row.index, column.id, !row.original.uslfrmflg);
+      const onCheckedChange = () => {
+        //console.log("TableCell-onCheckedChange=",row.index, column.id, !row.original.uslfrmflg);
         setValue(!row.original.uslfrmflg);
       //  displayValidationMessage(e);
          //onChange={()=>{row.original.uslfrmflg=!row.original.uslfrmflg;}}
@@ -33,8 +33,8 @@ type Option = {
       }
   
 
-    const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
-      console.log("TableCell-onBlur=",row.index, column.id, value);
+    const onBlur = () => {
+     // console.log("TableCell-onBlur=",row.index, column.id, value);
     //  displayValidationMessage(e);
        tableMeta?.updateData(row.index, column.id, value)
     }

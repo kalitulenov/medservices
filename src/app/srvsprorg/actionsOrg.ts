@@ -6,7 +6,7 @@ const url = './api/orgs';
 
 // ==============================================================================================
   async function getRequest() {
-    console.log("getRequest=",url);
+ //   console.log("getRequest=",url);
       const response = await fetch(url);
       return response.json();
   }
@@ -25,7 +25,7 @@ async function updateRequest(id: number, data: SprOrg) {
 
  //--------------------------------------------------------------
 async function deleteRequest(id: number) {
-    console.log("removeRow=",id);
+  //  console.log("removeRow=",id);
     const response = await fetch(`${url}/${id}`, {
       method: 'DELETE',
       headers: {
@@ -60,7 +60,7 @@ async function deleteRequest(id: number) {
     };
   
     const deleteRow = async (id: number) => {
-      console.log("useOrgs-deleteRow=");
+    //  console.log("useOrgs-deleteRow=");
       await deleteRequest(id);
       mutate(url);
     };

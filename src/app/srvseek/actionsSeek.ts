@@ -10,10 +10,10 @@ import { SprUslFrm} from "@/components/types";
 
 // ==============================================================================================
 export const GetSprUslFrm = async () => {
-  console.log("GetSprOrg=");
+ // console.log("GetSprOrg=");
   try {
-    const data = await db.sprfrmusl.findMany();
-      console.log("data=",data);
+    const data = await db.spruslfrm.findMany();
+    //  console.log("data=",data);
       return data;
     } catch (error) {
         console.error(error);
@@ -22,7 +22,7 @@ export const GetSprUslFrm = async () => {
 
 //--------------------------------------------------------------
 export async function updateRow(id: number, postData: SprUslFrm) {
-    console.log("updateRow=",id,postData);
+   // console.log("updateRow=",id,postData);
     // -------------- вариант 1 ----------------------------
     // const response = await db.$executeRaw`
     //       DELETE FROM spruslfrm WHERE Id=id;
@@ -38,12 +38,12 @@ export async function updateRow(id: number, postData: SprUslFrm) {
         );
       }
 
-    console.log("updateRow_create=");
+   // console.log("updateRow_create=");
     if (postData.uslfrmflg=true) {
-        const user = await db.spruslfrm.create({
+        await db.spruslfrm.create({
           data: {
             uslfrmhsp: postData.uslfrmhsp,
-            uslfrmtrf: postData.usltrf,
+            uslfrmtrf: postData.uslfrmtrf,
             uslminlet: Number(postData.uslminlet),
             uslmaxlet: Number(postData.uslmaxlet),
           },

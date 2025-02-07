@@ -2,7 +2,7 @@
 "use client"
 
 import {
-    ColumnDef,
+  //  ColumnDef,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -117,14 +117,14 @@ export const SprTable  = () => {
           },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,data);
+        //  console.log("data-table-updateRow=",rowIndex,data);
 
           updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
         updateData: (rowIndex: number, columnId: string, value: string) =>
           {
-              console.log("updateData-begin=");
+           //   console.log("updateData-begin=");
        
               setData((old) =>old.map((row, index) => 
                 {
@@ -138,7 +138,7 @@ export const SprTable  = () => {
         },
 
         removeRow: (rowIndex: number) => {
-          console.log("removeRow-rowIndex=",rowIndex);
+        //  console.log("removeRow-rowIndex=",rowIndex);
           deleteRow(data[rowIndex].id);
         },
   

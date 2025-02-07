@@ -6,12 +6,12 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowUpDown } from "lucide-react";
+//import { Checkbox } from "@/components/ui/checkbox";
 import { SprUslSeek } from '@/components/types';
 
-import { useEffect, useState } from "react";
-import { spruslfrm } from "@prisma/client";
+// import { useEffect, useState } from "react";
+// import { spruslfrm } from "@prisma/client";
 
 export const columns: ColumnDef<SprUslSeek>[] = [
     {

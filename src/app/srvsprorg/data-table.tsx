@@ -4,7 +4,7 @@
 "use client"
 
 import {
-    ColumnDef,
+   // ColumnDef,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -30,7 +30,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+//import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { FooterCell } from "@/components/FooterCell";
 //import { deleteRow, updateRow, addRow } from "./actionsUsr";
 import { SprOrg } from "@/components/types";
@@ -39,10 +39,10 @@ import { columns } from "./columns";
 //import { any } from "zod";
 
 
-  interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<SprOrg, TValue>[];
-    data: SprOrg[];
-  }
+  // interface DataTableProps<TData, TValue> {
+  //   columns: ColumnDef<SprOrg, TValue>[];
+  //   data: SprOrg[];
+  // }
 
 //export function SprTable<TData, TValue>({data,columns}: DataTableProps<TData, TValue>) {
    
@@ -121,14 +121,13 @@ export const SprTable  = () => {
           },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,data);
-
+        //  console.log("data-table-updateRow=",rowIndex,data);
           updateRow(data[rowIndex].id, data[rowIndex]);
         },
 
         updateData: (rowIndex: number, columnId: string, value: string) =>
           {
-              console.log("updateData-begin=");
+            //  console.log("updateData-begin=");
        
               setData((old) =>old.map((row, index) => 
                 {
@@ -143,7 +142,7 @@ export const SprTable  = () => {
         },
 
         removeRow: (rowIndex: number) => {
-          console.log("removeRow-rowIndex=",rowIndex);
+       //   console.log("removeRow-rowIndex=",rowIndex);
           deleteRow(data[rowIndex].id);
         },
   

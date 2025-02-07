@@ -7,7 +7,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormDescription,
+  //FormDescription,
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -44,10 +44,12 @@ const FormSchema = z.object({
 
 const LoginForm = () => {
   // передаем useFormState функцию login из actions.ts
+  
   // первоначальное состояние undefined (чтобы не было сообщении об ошибке)
   // в login передаем любые данные any и данные этой формы через FormData
   //const [formState, formAction] = useFormState<any, FormData>(login, {message: ''});
-  const [formState, formAction] = useFormState<any, FormData>(login, INITIAL_STATE);
+  //const [formState, formAction] = useFormState<any, FormData>(login, INITIAL_STATE);
+  const [formState, formAction] = useFormState(login, INITIAL_STATE);
 
   // При нажатии button запускается formAction, состояние которого state в начале undefined
   // и вызывается функцию login из actions.ts и передается ему данные формы через FormData и состояние undefined
@@ -86,7 +88,7 @@ const LoginForm = () => {
           {/* username */}
           <FormField
             control={form.control}
-            name="usrlog"
+            name="UsrLog"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Логин</FormLabel>
@@ -101,7 +103,7 @@ const LoginForm = () => {
           {/* password */}
           <FormField
             control={form.control}
-            name="usrpsw"
+            name="UsrPsw"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Пароль</FormLabel>

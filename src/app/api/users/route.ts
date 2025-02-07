@@ -1,11 +1,11 @@
 
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
+//import { headers } from "next/headers";
 import { getSession } from "@/actions";
 
-export async function GET(req: Request) {
-  console.log("route_GET=");
+export async function GET() {
+  //console.log("route_GET=");
   // const headerList = headers();         // полчить заголовок запроса
   // const type = headerList.get("type");  // полчить в заголовок параметр
   const session = await getSession();
@@ -30,7 +30,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) 
 {
-    console.log("POST=");
+   // console.log("POST=");
     
     const session = await getSession();
     session.isAdd = true;

@@ -4,6 +4,7 @@ import { SprTable } from './data-table'
 import { columns } from './columns'
 import { db } from "@/lib/db";
 import { getSession } from '@/actions';
+import { SprUslSeek } from '@/components/types';
 
 export default async function OfferPage() {
    // получаем расшифрованный ключ из actions.ts
@@ -15,9 +16,9 @@ export default async function OfferPage() {
       try {
         //  const response = await db.sprusl.findMany({take: 5000});
         //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
-          const orgnam = session.userorg;
+        //  const orgnam = session.userorg;
           const orgkod = Number(session.userorgkod);
-          const response = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
+          const response: SprUslSeek[] = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
                                                      SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslHspNam
                                               FROM SprUsl INNER JOIN
                                                 (SELECT UslMinLet, UslMaxLet, UslFrmTrf, OrgNam
@@ -36,8 +37,12 @@ export default async function OfferPage() {
   
   // загрузка меню из БД ---------------------------
  // console.log("SeekPage")
-  const defaultData: any = await loader();
+  const defaultData = await loader();
   // если пусто ---------------------------
+  if (!defaultData || defaultData == undefined) {
+    return <h1>No data found</h1>;
+  }
+  
   //if (!defaultData) return <h1>no datafound</h1>
   
   // загрузка меню в память ---------------------------

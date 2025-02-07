@@ -16,7 +16,7 @@ export const EditCell = ({ row, table }) => {
 
     // удаление записи из БД
     const removeRow = () => {
-      console.log("EditCell-removeRow=");
+    //  console.log("EditCell-removeRow=");
       meta?.removeRow(row.index);
     };
 

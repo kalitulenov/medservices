@@ -2,13 +2,25 @@
 
 import { sessionOptions, SessionData, dafaultSession } from "@/lib";
 import { getIronSession } from "iron-session";
-import { revalidatePath } from "next/cache";
+//import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import {z}  from "zod";
 
 import { db } from "@/lib/db";
+
+//  структура меню -------------------
+interface StrLogin {
+  zodErrors: string,
+  message: string,
+  data: {
+    UsrLog: string,
+    UsrPsw: string,
+  }
+}
+
+
 
 // ==============================================================================================
 export const getSession = async () => {
@@ -37,7 +49,14 @@ export const getSession = async () => {
 
 export async function login(
   // formState: { message: string },
-  prevState: any,
+  prevState: StrLogin,
+  // prevState: {
+  //   zodErrors: string,
+  //   message: string,
+  //   data: {
+  //     UsrLog: string,
+  //     UsrPsw: string,
+  //   },
   formData: FormData
 ) {
   // получить данные сеанса
@@ -47,8 +66,8 @@ export async function login(
   //console.log("Act_Login_formData=", formData);
   
   const formDataObj = {
-    formUsername: formData.get("usrlog") as string,
-    formPassword: formData.get("usrpsw") as string,
+    formUsername: formData.get("UsrLog") as string,
+    formPassword: formData.get("UsrPsw") as string,
     formUserId: formData.get("id") as string,
   }
 
@@ -103,17 +122,18 @@ export async function login(
     // });
 
   // -------------- Вариант 2 -------------------------------------
-    const userArr: any = await db.$queryRaw`SELECT SprUsr.*,SprOrg.OrgKod 
+    const userArr = await db.$queryRaw`SELECT SprUsr.*,SprOrg.OrgKod 
                                         FROM SprUsr LEFT OUTER JOIN SprOrg  
                                                     ON SprUsr.UsrOrg = SprOrg.OrgNam
                                         WHERE SprUsr.UsrLog=${formDataObj.formUsername} AND
                                               SprUsr.UsrPsw=${formDataObj.formPassword};`
 
-    if (!userArr || !userArr.length)  return { ...prevState, message: "нет организаций" };
+    if (!userArr || userArr == undefined)  return { ...prevState, message: "нет организаций" };
+    
 
   //  console.log("Act_Login_userArr=", userArr);
    // console.log("Act_Login_user2=", formDataObj.formUsername,user?.usrlog);
-    const user = userArr[0];
+    const user  = userArr[0];
     // если имя пользователя из формы не совпадает с именем из БД , то ошибка
     if (formDataObj.formUsername !== String(user.usrlog)) {
       return { ...prevState, message: "wrong credentials" };

@@ -1,11 +1,12 @@
 
-import { SprUsr } from "./types";
+import { SprUsr } from "@/components/types";
+
 import useSWR, { mutate } from 'swr';
 const url = './api/users';
 
 // ==============================================================================================
   async function getRequest() {
-    console.log("getRequest=",url);
+    //console.log("getRequest=",url);
       const response = await fetch(url);
       return response.json();
   }
@@ -24,7 +25,7 @@ async function updateRequest(id: number, data: SprUsr) {
 
  //--------------------------------------------------------------
 async function deleteRequest(id: number) {
-    console.log("removeRow=",id);
+   // console.log("removeRow=",id);
     const response = await fetch(`${url}/${id}`, {
       method: 'DELETE',
       headers: {
@@ -59,7 +60,7 @@ async function deleteRequest(id: number) {
     };
   
     const deleteRow = async (id: number) => {
-      console.log("useUsers-deleteRow=");
+     //console.log("useUsers-deleteRow=");
       await deleteRequest(id);
       mutate(url);
     };

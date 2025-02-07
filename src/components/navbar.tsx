@@ -10,15 +10,23 @@ export async function Navbar() {
 
   // получаем расшифрованный ключ из actions.ts
   const session = await getSession();
+  // deepseek
+  if (!session) {
+    return <h1>No session found</h1>;
+  }
  // console.log('session_Nav=',session);
 
 //  структура меню -------------------
 interface NavItem {
+  // id: number;
+  // label: string;
+  // href: string;
+  // isExternal: boolean;
+  number: string;
   id: number;
   label: string;
   href: string;
-  isExternal: boolean;
-  // type: "LINK" | "PRIMARY" | "SECONDARY";
+  typeusr: string;
 }
 
 // загрузка меню из БД ---------------------------
@@ -29,6 +37,9 @@ async function loader() {
               where: {typeusr: session.usertype}
         });
         //console.log("response=",response);
+        if (!Array.isArray(response)) {
+          throw new Error("Expected data to be an array of NavItem");
+        }
         return response;
   } catch (error) {
     console.error(error);
@@ -36,10 +47,15 @@ async function loader() {
 }
 
 // загрузка меню из БД ---------------------------
-const data: any = await loader();
-
+//const data: any = await loader();
+const data = await loader();
 // если пусто ---------------------------
-if (!data) return <h1>no datafound</h1>
+//if (!data) return <h1>no datafound</h1>
+  // deepseek
+if (!data || data.length === 0 || data == undefined) {
+  return <h1>No data found</h1>;
+}
+
 
 // загрузка меню в память ---------------------------
 const navItems = data;

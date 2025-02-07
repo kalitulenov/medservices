@@ -2,7 +2,7 @@
 "use client"
 
 import {
-    ColumnDef,
+   // ColumnDef,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -11,7 +11,7 @@ import {
     SortingState,
     ColumnFiltersState,
     useReactTable,
-    VisibilityState,
+   // VisibilityState,
     // getFilteredRowModel,
     // getSortedRowModel,
   } from "@tanstack/react-table";
@@ -28,8 +28,8 @@ import {
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { FooterCell } from "@/components/FooterCell";
+//import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+//import { FooterCell } from "@/components/FooterCell";
 import { SprUslFrm } from "@/components/types";
 import useOffers from "./actionsOffer";
 import { columns } from "./columns";
@@ -58,7 +58,7 @@ export const SprTable  = () => {
   // для фильтрации ColumnFiltersState получаем из таблицы
   const [columnFilters,setColumnFilters] = useState<ColumnFiltersState>([])
   // для скрытие колонок. VisibilityState получаем из таблицы
-  const [columnVisibility, setColumnVisibility] = useState({
+  const [columnVisibility] = useState({
     uslfrmidn: false,
     uslfrmhsp: false, //hide this column by default
   });
@@ -128,7 +128,7 @@ export const SprTable  = () => {
           },
 
         updateRow: (rowIndex: number) => {
-          console.log("data-table-updateRow=",rowIndex,data[rowIndex]);
+         // console.log("data-table-updateRow=",rowIndex,data[rowIndex]);
 
           updateRow(data[rowIndex].id, data[rowIndex]);
         },

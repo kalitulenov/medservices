@@ -5,8 +5,8 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowUpDown } from "lucide-react";
+//import { Checkbox } from "@/components/ui/checkbox";
 import { EditCell } from "@/components/EditCell";
 import { SprUsr } from '@/components/types';
 
