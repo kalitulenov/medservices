@@ -23,7 +23,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db'; // Предположим, что db — это ваш Prisma клиент
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE({ params }: { params: { id: string } }) {
     const id = parseInt(params.id, 10); // Преобразуем id в число
 
     if (isNaN(id)) {
