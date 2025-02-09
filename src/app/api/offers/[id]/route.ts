@@ -59,26 +59,53 @@ import { db } from '@/lib/db'; // Предположим, что db — это �
 //   }
 // }
 
-  export async function PUT(req: Request, {params}: {params: {id: string}} ) {
+  // export async function PUT(req: Request, {params}: {params: {id: string}} ) {
+  //   const id = params.id;
+  //   const body = await req.json();
+  //  // const { title, content, authorEmail } = await req.json();
+
+  //   try {
+  //       await db.spruslfrm.update
+  //       (
+  //           {
+  //            where: {id: parseInt(id)},
+  //            data: {...body,},
+  //            } 
+  //       );
+  //       return NextResponse.json(id);
+  
+  //   } catch (err) 
+  //   {
+  //     console.log(err);
+  //     return NextResponse.json(err);
+  //   }
+  // }
+  
+
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
     const id = params.id;
     const body = await req.json();
-   // const { title, content, authorEmail } = await req.json();
 
     try {
-        await db.spruslfrm.update
-        (
-            {
-             where: {id: parseInt(id)},
-             data: {...body,},
-             } 
-        );
-        return NextResponse.json(id);
-  
-    } catch (err) 
-    {
-      console.log(err);
-      return NextResponse.json(err);
+        // Преобразуем id в число (если это необходимо)
+        const parsedId = parseInt(id, 10);
+        if (isNaN(parsedId)) {
+            return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+        }
+
+        // Обновляем запись в базе данных
+        await db.spruslfrm.update({
+            where: { id: parsedId },
+            data: { ...body },
+        });
+
+        // Возвращаем успешный ответ
+        return NextResponse.json({ id: parsedId }, { status: 200 });
+
+    } catch (err) {
+        console.error(err);
+        // Возвращаем общее сообщение об ошибке
+        return NextResponse.json({ error: 'Failed to update record' }, { status: 500 });
     }
-  }
-  
+}
   
