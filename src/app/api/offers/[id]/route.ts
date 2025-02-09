@@ -4,13 +4,13 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function DELETE({params}: {params: {id: string}} ) {
+export async function DELETE(req: Request, {params}: {params: {id: number}} ) {
     const id = params.id;
     
     try {
         await db.spruslfrm.delete
         (
-            {where: {id: parseInt(id) }} 
+            {where: {id: id }} 
         );
         return NextResponse.json(id);
     } catch (err) 
