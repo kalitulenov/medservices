@@ -20,7 +20,7 @@
 //     }
 //   }
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { db } from '@/lib/db'; // Предположим, что db — это ваш Prisma клиент
 
 // export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {

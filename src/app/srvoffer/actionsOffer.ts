@@ -13,7 +13,7 @@ const url = './api/offers';
 //--------------------------------------------------------------
 async function updateRequest(uslidn: number, data: SprUslFrm) {
   const DelFlg = data.uslfrmflg;
-  const DelIdn = data.uslfrmidn;
+  //const DelIdn = data.uslfrmidn;
   //console.log("updateRequest_uslidn=",uslidn, DelFlg, DelIdn,data);
 
   // if (DelIdn) {
