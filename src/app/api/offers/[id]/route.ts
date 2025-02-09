@@ -41,23 +41,23 @@ import { db } from '@/lib/db'; // Предположим, что db — это �
 //     }
 // }
 
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
-  const id = Number(context.params.id);
+// export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+//   const id = Number(context.params.id);
 
-  if (!id) {
-      return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
-  }
+//   if (!id) {
+//       return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+//   }
 
-  try {
-      await db.spruslfrm.delete({
-          where: { id }
-      });
-      return NextResponse.json({ id });
-  } catch (err) {
-      console.error(err);
-      return NextResponse.json({ error: 'Failed to delete record' }, { status: 500 });
-  }
-}
+//   try {
+//       await db.spruslfrm.delete({
+//           where: { id }
+//       });
+//       return NextResponse.json({ id });
+//   } catch (err) {
+//       console.error(err);
+//       return NextResponse.json({ error: 'Failed to delete record' }, { status: 500 });
+//   }
+// }
 
   export async function PUT(req: Request, {params}: {params: {id: string}} ) {
     const id = params.id;
