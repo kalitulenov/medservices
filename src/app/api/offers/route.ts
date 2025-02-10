@@ -5,67 +5,93 @@ import { NextResponse } from "next/server";
 import { getSession } from "@/actions";
 
 export async function GET() {
- // console.log("route_GET=");
- // const headerList = headers();         // полчить заголовок запроса
- // const type = headerList.get("type");  // полчить в заголовок параметр
   const session = await getSession();
 
-    try {
-      //  const response = await db.sprusl.findMany({take: 5000});
-      //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
-      //  const orgnam = session.userorg;
-        const orgkod = Number(session.userorgkod);
-       // console.log("orgkod=",orgkod);
-        const result = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf AS UslFrmTrf, SprUsl.UslNam AS UslFrmNam,  
-                                                    SprUsl.UslEdn AS UslFrmEdn, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,
-                                                    CAST(${orgkod} AS INTEGER) AS UslFrmHsp, T.id AS UslFrmIdn
-                                            FROM SprUsl LEFT OUTER JOIN
-                                              (SELECT SprUslFrm.id, true AS UslFrmFlg, UslMinLet, UslMaxLet, UslFrmTrf
-                                                FROM SprUslFrm INNER JOIN SprOrg 
-                                                              ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
-                                                WHERE SprOrg.OrgKod = ${orgkod}) AS T 
-                                                      ON (SprUsl.UslTrf = T.UslFrmTrf)
-                                            WHERE LENGTH(SprUsl.UslTrf)=11
-                                            ORDER BY SprUsl.UslTrf LIMIT 1000;`
+  try {
+      const orgkod = Number(session.userorgkod);
+      // Получаем данные из базы данных
+      const result = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf AS UslFrmTrf, SprUsl.UslNam AS UslFrmNam,  
+                                                  SprUsl.UslEdn AS UslFrmEdn, T.UslFrmFlg, T.UslMinLet, T.UslMaxLet,
+                                                  CAST(${orgkod} AS INTEGER) AS UslFrmHsp, T.id AS UslFrmIdn
+                                          FROM SprUsl LEFT OUTER JOIN
+                                            (SELECT SprUslFrm.id, true AS UslFrmFlg, UslMinLet, UslMaxLet, UslFrmTrf
+                                              FROM SprUslFrm INNER JOIN SprOrg 
+                                                            ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
+                                              WHERE SprOrg.OrgKod = ${orgkod}) AS T 
+                                                    ON (SprUsl.UslTrf = T.UslFrmTrf)
+                                          WHERE LENGTH(SprUsl.UslTrf)=11
+                                          ORDER BY SprUsl.UslTrf LIMIT 1000;`
 
-        return NextResponse.json(result);
+      // Возвращаем успешный ответ
+      return NextResponse.json(result);
+
   } catch (err) {
-    console.error(err);
-    return NextResponse.json(err);
+      console.error(err);
+      // Возвращаем общее сообщение об ошибке
+      return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
   }
 }
 
 
-export async function POST(req: Request) 
-{
-   // console.log("POST=");
-    
-    const session = await getSession();
-    session.isAdd = true;
-    await session.save();
+export async function POST(req: Request) {
+  const session = await getSession();
 
-
-    const body = await req.json();
-    const result = await db.spruslfrm.create(
-      {
-        data: {...body,},
+  try {
+      // Обновляем сессию
+      try {
+          session.isAdd = true;
+          await session.save();
+      } catch (saveError) {
+          console.error('Failed to save session:', saveError);
+          return NextResponse.json(
+              {
+                  message: "Failed to save session",
+                  status: 500,
+              },
+              { status: 500 }
+          );
       }
-    );
 
-    if (!result) NextResponse.json(
-      {
-        message: "error",
-        status: 500
+      // Парсим тело запроса
+      const body = await req.json();
+
+      // Создаем запись в базе данных
+      const result = await db.spruslfrm.create({
+          data: { ...body },
       });
-    return NextResponse.json(
-        {
-          message: "OK",
-          status: 200,
-          data: result
-        });
 
+      // Проверяем результат
+      if (!result) {
+          return NextResponse.json(
+              {
+                  message: "error",
+                  status: 500,
+              },
+              { status: 500 }
+          );
+      }
+
+      // Возвращаем успешный ответ
+      return NextResponse.json(
+          {
+              message: "OK",
+              status: 200,
+              data: result,
+          },
+          { status: 200 }
+      );
+
+  } catch (err) {
+      console.error(err);
+      return NextResponse.json(
+          {
+              message: "Internal Server Error",
+              status: 500,
+          },
+          { status: 500 }
+      );
+  }
 }
-
 
 
 

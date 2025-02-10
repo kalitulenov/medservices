@@ -12,28 +12,71 @@ export default async function OfferPage() {
   // console.log('session_Nav=',session);
    
     // загрузка меню из БД ---------------------------
-  async function loader() {
-      try {
-        //  const response = await db.sprusl.findMany({take: 5000});
-        //  const response = await db.$queryRaw `SELECT getseekusl(${1});`;
-        //  const orgnam = session.userorg;
-          const orgkod = Number(session.userorgkod);
-          const response: SprUslSeek[] = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
-                                                     SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslHspNam
-                                              FROM SprUsl INNER JOIN
-                                                (SELECT UslMinLet, UslMaxLet, UslFrmTrf, OrgNam
-                                                 FROM SprUslFrm INNER JOIN SprOrg 
-                                                                ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
-                                                 WHERE SprOrg.OrgKod <> ${orgkod}) AS T 
-                                                        ON (SprUsl.UslTrf = T.UslFrmTrf)
-                                              WHERE LENGTH(SprUsl.UslTrf)=11
-                                              ORDER BY SprUsl.UslTrf  LIMIT 2500;`
+  // async function loader() {
+  //     try {
+  //         const orgkod = Number(session.userorgkod);
+  //         const response: SprUslSeek[] = await db.$queryRaw`SELECT SprUsl.Id, SprUsl.UslTrf, SprUsl.UslNam, SprUsl.UslEdn, 
+  //                                                    SprUsl.UslZen, T.UslMinLet, T.UslMaxLet, T.OrgNam AS UslHspNam
+  //                                             FROM SprUsl INNER JOIN
+  //                                               (SELECT UslMinLet, UslMaxLet, UslFrmTrf, OrgNam
+  //                                                FROM SprUslFrm INNER JOIN SprOrg 
+  //                                                               ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
+  //                                                WHERE SprOrg.OrgKod <> ${orgkod}) AS T 
+  //                                                       ON (SprUsl.UslTrf = T.UslFrmTrf)
+  //                                             WHERE LENGTH(SprUsl.UslTrf)=11
+  //                                             ORDER BY SprUsl.UslTrf  LIMIT 2500;`
 
-          return response;
+  //         return response;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+
+  async function loader() {
+    try {
+        const orgkod = Number(session.userorgkod);
+        if (isNaN(orgkod)) {
+            throw new Error('Invalid orgkod');
+        }
+
+        const response: SprUslSeek[] = await db.$queryRaw`
+            SELECT 
+                SprUsl.Id, 
+                SprUsl.UslTrf, 
+                SprUsl.UslNam, 
+                SprUsl.UslEdn, 
+                SprUsl.UslZen, 
+                T.UslMinLet, 
+                T.UslMaxLet, 
+                T.OrgNam AS UslHspNam
+            FROM 
+                SprUsl
+            INNER JOIN (
+                SELECT 
+                    UslMinLet, 
+                    UslMaxLet, 
+                    UslFrmTrf, 
+                    OrgNam
+                FROM 
+                    SprUslFrm
+                INNER JOIN 
+                    SprOrg ON SprUslFrm.UslFrmHsp = SprOrg.ORGKOD
+                WHERE 
+                    SprOrg.OrgKod <> ${orgkod}
+            ) AS T ON SprUsl.UslTrf = T.UslFrmTrf
+            WHERE 
+                LENGTH(SprUsl.UslTrf) = 11
+            ORDER BY 
+                SprUsl.UslTrf
+            LIMIT 2500;`;
+
+        return response;
     } catch (error) {
-      console.error(error);
+        console.error(error);
+        throw error; // или return [];
     }
-  }
+}
   
   // загрузка меню из БД ---------------------------
  // console.log("SeekPage")

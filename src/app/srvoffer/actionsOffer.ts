@@ -13,17 +13,17 @@ const url = './api/offers';
 //--------------------------------------------------------------
 async function updateRequest(uslidn: number, data: SprUslFrm) {
   const DelFlg = data.uslfrmflg;
-  //const DelIdn = data.uslfrmidn;
+  const DelIdn = data.uslfrmidn;
   //console.log("updateRequest_uslidn=",uslidn, DelFlg, DelIdn,data);
 
-  // if (DelIdn) {
-  //   await fetch(`${url}/${DelIdn}`, {
-  //     method: "DELETE",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  // }
+  if (DelIdn) {
+    await fetch(`${url}/${DelIdn}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
   //console.log("updateRequest_PrzDel=",DelFlg);
 
